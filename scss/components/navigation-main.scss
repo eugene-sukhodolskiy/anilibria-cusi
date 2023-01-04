@@ -1,0 +1,50 @@
+.component.navigation-main {
+	.nav-list {
+		display: flex;
+		gap: $std-mg-lg;
+		align-items: center;
+
+		@include media("max", "xl") {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0;
+		}	
+
+		.nav-list-item {
+			@include media("max", "xl") {
+				width: 100%;
+				box-sizing: border-box;
+			}
+
+			.nav-link {
+				font-size: $fsize-sm;
+				color: $color-text;
+				border: 0;
+				padding: 10px 0;
+
+				&:hover, 
+				&.active {
+					color: $color-primary;
+
+					@include media("max", "xl") {
+						background-color: rgba(0, 0, 0, .05);
+					}
+				}
+
+				@include media("max", "xl") {
+					padding: $std-pd-lg;
+					width: 100%;
+					box-sizing: border-box;
+					font-size: $fsize-md;
+				}
+			}
+
+			.create-uadpost {
+				@include media("max", "xl") {
+					width: -webkit-fill-available;
+					margin: $std-mg-lg;
+				}
+			}
+		}
+	}
+}

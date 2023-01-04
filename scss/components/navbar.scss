@@ -1,0 +1,141 @@
+.component.navbar {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 50px;
+	background: $color-bg-card-alt;
+	box-shadow: $shadow-md;
+	z-index: 100;
+
+	.navbar-container {
+		max-width: $page-content-max-width;
+		height: inherit;
+		overflow: visible;
+		display: grid;
+		grid-template-columns: max-content 320px auto 90px;
+		grid-gap: $std-mg-lg;
+		align-items: center;
+		justify-content: space-between;
+
+		@include media("max", "xl") {
+			grid-template-columns: max-content 400px max-content;
+		}
+
+		@include media("max", "md") {
+			grid-template-columns: max-content 300px max-content;
+		}
+
+		@include media("max", "sm") {
+			grid-template-columns: 80% max-content;
+		}
+
+		.btn-nav-on-mob-show {
+			background: transparent;
+			border: 0;
+			display: none;
+			width: 40px;
+			text-align: center;
+			line-height: 100%;
+			font-size: 24px;
+			color: $color-text;
+			transition-property: color;
+			transition-duration: $trans-du;
+
+			.mdi {
+				&.state-inactive {
+					display: inline-block;
+				}
+
+				&.state-active {
+					display: none;
+				}
+			}
+
+			&.active {
+				.mdi {
+					&.state-inactive {
+						display: none;
+					}
+
+					&.state-active {
+						display: inline-block;
+					}
+				}				
+			}
+
+			@include media("max", "xl") {
+				display: block;
+			}
+
+			&:hover {
+				color: $color-primary;
+			}
+		}
+
+		.logo-wrapper {
+			.logo {
+				.logo-link {
+					color: $color-text;
+					font-size: $fsize-xl;
+					border-bottom: 0;
+				}
+			}
+
+			@include media("max", "sm"){ 
+				display: none;
+			}
+		}
+
+		.search-bar-wrapper {
+
+		}
+
+		.userbar-wrapper,
+		.navigation-main-wrapper {
+			@include media("max", "xl") {
+				visibility: hidden;
+				opacity: 0;
+				position: fixed;
+				width: 260px;
+				right: -270px;
+				z-index: 100;
+				transition-duration: $trans-du;
+				transition-property: right, visibility, opacity;
+			}
+
+			&.show {
+				visibility: visible;
+				opacity: 1;
+				right: 0;
+			}
+		}
+
+		.navigation-main-wrapper {
+			@include media("max", "xl") {
+				top: 50px;
+				height: calc(100% - 50px);
+				background: $color-bg-card;
+				box-shadow: $shadow-md;
+			}
+		}
+
+		.userbar-wrapper {
+			@include media("max", "xl") {
+				top: 280px;
+			}
+		}
+	}
+	
+	.auth-btns-group {
+		display: flex;
+		gap: $std-mg-lg;
+		align-items: center;
+		justify-content: flex-end;
+
+		@include media("max", "xl") {
+		  flex-direction: column;
+		  margin-top: $std-mg-lg;
+		}
+	}
+}

@@ -1,0 +1,14 @@
+.page.login {
+	.login-form {
+		max-width: 400px;
+		margin: auto;
+
+		.form-btns {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-items: center;
+			gap: $std-mg-md;
+		}
+	}
+}

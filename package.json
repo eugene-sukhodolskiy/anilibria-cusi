@@ -1,0 +1,30 @@
+{
+  "name": "anilibria-cusi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eugene-sukhodolskiy/anilibria-cusi.git"
+  },
+  "author": "E.Sukhodolskiy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eugene-sukhodolskiy/anilibria-cusi/issues"
+  },
+  "homepage": "https://github.com/eugene-sukhodolskiy/anilibria-cusi#readme",
+  "dependencies": {
+    "gulp": "^4.0.2"
+  },
+  "devDependencies": {
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-watch": "^5.0.1",
+    "sass": "^1.57.1"
+  }
+}

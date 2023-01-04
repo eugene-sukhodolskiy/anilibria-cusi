@@ -1,0 +1,17 @@
+@mixin media($minmax, $media) {
+	@each $size, $resolution in $sizes {
+		@if $media == $size {
+			@if $minmax == "max" {
+				@media only screen and (#{$minmax}-width: #{$resolution}px) {
+					@content;
+				}
+			}
+
+			@if $minmax == "min" {
+				@media only screen and (#{$minmax}-width: #{$resolution + 1}px) {
+					@content;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Anilibria Custom Interface</title>
+	<link rel="stylesheet" href="/libs/materialdesign-icons/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="/css/style.min.css">
+</head>
+<body>
+	<div class="app">
+		<div class="global-alerts-container">
+			
+		</div>
+
+		<div class="component navbar">
+			<div class="container navbar-container">
+				<div class="logo-wrapper">
+					<div class="logo">
+						<a href="/" class="logo-link">Logo</a>
+					</div>
+				</div>
+
+				<div class="search-bar-wrapper">
+					<div class="component search-bar">
+						<div class="form-group search-field-container">
+							<input 
+								type="text" 
+								name="search" 
+								class="std-input search-field"
+								value=""
+								placeholder="Поиск"
+							>
+							<button class="submit">
+								<span class="mdi mdi-magnify"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="navigation-main-wrapper">
+					<nav class="component navigation-main">
+						<ul class="nav-list">
+							<li class="nav-list-item">
+								<a href="/" class="nav-link">Главная</a>
+							</li>
+							<li class="nav-list-item">
+								<a 
+									href="#" 
+									class="nav-link"
+								>Избранное</a>
+							</li>
+							<li class="nav-list-item">
+								<a href="#" class="nav-link">Жанры</a>
+							</li>
+							<li class="nav-list-item">
+								<a 
+									href="#" 
+									class="std-btn btn-primary create-uadpost"
+								>
+									Новые серии
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+
+				<div class="userbar-wrapper">
+					<div class="auth-btns-group">
+						<a 
+							href="#" 
+							class="std-btn btn-success"
+						>Войти</a>
+					</div>
+				</div>
+
+				<button class="btn-nav-on-mob-show">
+					<span class="mdi mdi-menu state-inactive"></span>	
+					<span class="mdi mdi-close state-active"></span>	
+				</button>
+			</div>
+		</div>
+
+		<div class="container page-container">
+			<div class="page login">
+				<div class="card login-form">
+					<div class="form-group">
+						<label for="email" class="form-label">E-mail или логин</label>
+						<input 
+							type="text" 
+							id="email"
+							name="email" 
+							class="std-input" 
+							placeholder="E-mail или логин" 
+						>
+					</div>
+					<div class="form-group">
+						<label for="passwd" class="form-label">Пароль</label>
+						<input 
+							type="password" 
+							id="passwd"
+							name="passwd" 
+							class="std-input" 
+							placeholder="Пароль" 
+						>
+					</div>
+					<div class="form-group form-btns">
+						<button class="std-btn btn-success submit-btn">Войти</button>
+						<div>
+							<a href="https://www.anilibria.tv/pages/login.php" target="_blank">Регистрация</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

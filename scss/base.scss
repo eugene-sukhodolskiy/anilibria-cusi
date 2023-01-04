@@ -1,0 +1,360 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: $color-bg;
+	color: $color-text; 
+	font-family: $font-family;
+}
+
+.page {
+	margin-top: 50px;
+	padding-top: $std-pd-xl;
+}
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	padding-right: $std-pd-lg;
+	padding-left: $std-pd-lg;
+	margin-right: auto;
+	margin-left: auto;
+	box-sizing: border-box;
+
+	@include media("max", "md"){
+		padding-right: $std-pd-md;
+		padding-left: $std-pd-md;
+	}
+}
+
+.form {
+	display: block;
+	margin-top: $std-mg-lg;
+	margin-bottom: $std-mg-lg;
+	padding: $std-pd-xl;
+	border-radius: $border-rad-xl;
+	background-color: $color-bg-card;
+
+	@include media("max", "sm") {
+		padding: $std-pd-lg;
+	}
+}
+
+.form-group {
+	margin: $std-mg-md 0;
+	position: relative;
+
+	.form-label {
+		display: block;
+		margin-bottom: 2px;
+		font-size: 13px;
+	}
+
+	.std-input[type="checkbox"],
+	.std-input[type="radio"] {
+		float: left;
+		margin-right: 6px;
+		width: auto;
+
+		& + .form-label {
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	.input-counter {
+		position: absolute;
+		right: 5px;
+		top: 0px;
+		font-size: $fsize-sm;
+		text-align: right;
+		width: 50px;
+		display: none;
+
+		&.show {
+			display: block;
+		}
+	}
+}
+
+.std-input {
+	width: 100%;
+	padding: 8px 10px;
+	border: $border-1;
+	border-radius: $border-rad-md;
+	font-size: 15px;
+	box-sizing: border-box;
+	transition-duration: $trans-du;
+	transition-property: border-color;
+	color: $color-text;
+	background-color: $color-bg-card;
+
+	&:focus {
+		border-color: $color-primary;
+		outline: none;
+	}
+
+	&.error {
+		border-color: $color-danger;
+	}
+
+	&[type="checkbox"] {
+		width: 18px;
+		height: 18px;
+		margin: 0;
+		margin-right: $std-mg-xsm;
+	}
+
+	&::placeholder {
+		font-family: $font-family;
+		color: $color-text-lite;
+	}
+}
+
+textarea.std-input {
+	resize: none;
+	min-height: 100px;
+}
+
+.std-btn {
+	padding: 8px 10px;
+	border: 2px solid #666;
+	border-radius: $border-rad-md;
+	font-size: 15px;
+	max-height: 37px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: $std-mg-xsm;
+	box-sizing: border-box;
+	transition-duration: $trans-du;
+	transition-property: color, background-color;
+
+	.mdi {
+		font-size: 20px;
+		position: relative;
+		top: 1px;
+	}
+
+	&.btn-primary {
+		background-color: $color-primary;
+		border-color: $color-primary;
+		color: $color-text-inverted;
+
+		&:hover {
+			color: $color-primary;
+		}
+	}
+
+	&.btn-success {
+		background-color: $color-success;
+		border-color: $color-success;
+		color: $color-text;
+		
+		&:hover {
+			color: $color-success;
+		}
+	}
+
+	&.btn-warning {
+		background-color: $color-warning;
+		border-color: $color-warning;
+		color: $color-text;
+	}
+
+	&.btn-danger {
+		background-color: $color-danger;
+		border-color: $color-danger;
+		color: $color-text-inverted;
+		
+		&:hover {
+			color: $color-danger;
+		}
+	}
+
+	&.btn-default {
+		background-color: $color-addition;
+		border-color: $color-addition;
+		color: $color-text;
+	}
+
+	&:hover {
+		background-color: transparent;
+	}
+
+	&.btn-circle {
+		border-radius: 100%;
+		width: 36px;
+		height: 36px;
+		border: 0;
+		color: $color-text;
+		
+		.mdi {
+			font-size: 24px;
+		}
+	}
+
+	&.btn-remove {
+		&:hover {
+			background-color: $color-danger;
+			color: $color-text-inverted;
+		}
+	}
+
+	&.btn-popup-close {
+		display: flex;
+		height: 40px;
+		width: 40px;
+		max-width: initial;
+		max-height: initial;
+		font-size: 20px;
+		border-radius: 100%;
+		border: 0;
+		align-items: center;
+		padding: 0;
+		justify-content: center;
+		color: $color-text;
+		transition-property: transform, opacity, visibility, background-color, color; 
+
+		&:hover {
+			background-color: $color-danger;
+			transform: rotate(90deg);
+			color: $color-text-inverted;
+			background-color: $color-danger;
+		}
+	}
+
+	&.btn-buy {
+		font-size: $fsize-lg;
+
+		&:hover {
+			background-color: #fff;
+			color: $color-success;
+		}
+	}
+
+	&.disable {
+		background-color: $color-disable !important;
+		border-color: $color-disable !important;
+		color: $color-text !important;
+
+		&:hover {
+			background-color: $color-disable !important;
+			color: $color-text !important;
+		}
+	}
+}
+
+.no-matter-text {
+	font-size: $fsize-xsm;
+	color: $color-text-lite;
+}
+
+a {
+	color: $color-primary;
+	text-decoration: none;
+	display: inline-block;
+	border-bottom: 1px solid $color-primary;
+	transition-duration: $trans-du;
+	transition-property: color, border-color;
+
+	&:hover {
+		color: $color-success;
+		border-color: $color-success
+	}
+}
+
+ul {
+	list-style-type: none;
+}
+
+p {
+	margin: $std-pd-md 0;
+}
+
+hr {
+	height: 1px;
+	border: 0;
+	background: $color-disable;
+	margin: $std-mg-xl 0;
+}
+
+.label {
+	display: inline-block;
+	font-size: $fsize-md;
+	padding: $std-pd-xsm $std-pd-sm $std-pd-xsm - 1 $std-pd-sm;
+	background-color: $color-addition;
+	color: $color-text;
+	border-radius: $border-rad-sm;
+
+	&.label-primary {
+		background-color: $color-primary;
+		color: $color-text-inverted;
+	}
+
+	&.label-success {
+		background-color: $color-success;
+	}
+
+	&.label-warning {
+		background-color: $color-warning;
+	}
+
+	&.label-danger {
+		background-color: $color-danger;
+		color: $color-text-inverted;
+	}
+}
+
+.popup-back-blur {
+	position: fixed;
+	z-index: 150;
+	background-color: rgba(0, 0, 0, .8);
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition-duration: $trans-du;
+	transition-property: opacity, visibility;
+}
+
+.show > .popup-back-blur{
+	opacity: 1;
+	visibility: visible;
+}
+
+.card {
+	background-color: $color-bg-card;
+	border-radius: $border-rad-lg;
+	padding: $std-pd-lg;
+
+	@include media("max", "md") {
+		padding: $std-pd-md;
+	}
+}
+
+.global-alerts-container {
+	$gl-alerts-width: 400px;
+	position: fixed;
+	height: auto;
+	width: 100%;
+	max-width: $gl-alerts-width;
+	bottom: 0;
+	left: 50%;
+	margin-left: -$gl-alerts-width / 2;
+	height: auto;
+
+	@include media("max", "sm") {
+		margin-left: 0;
+		width: auto;
+		max-width: initial;
+		left: $std-mg-md;
+		right: $std-mg-md;
+	} 
+}

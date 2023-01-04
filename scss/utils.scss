@@ -1,0 +1,31 @@
+.dnone {
+	display: none !important;
+}
+
+.hide {
+	visibility: hidden;
+	opacity: 0;
+	cursor: default;
+}
+
+.std-row {
+	display: flex;
+	flex-direction: row;
+  flex-wrap: wrap;
+  gap: $std-mg-lg;
+  align-items: center;
+
+  &.space-between {
+  	justify-content: space-between;
+  }
+}
+
+a.no-decoration,
+a.no-decoration:hover {
+	border: 0;
+	color: $color-text;
+}
+
+.collapse:not(.collapse-show) {
+  display: none;
+}

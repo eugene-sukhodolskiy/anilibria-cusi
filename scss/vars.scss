@@ -1,0 +1,62 @@
+$color-primary: #93BFB7;
+$color-success: #387373;
+$color-warning: #F2A71B;
+$color-danger: #BF665E;
+$color-addition: #000;
+$color-disable: #333;
+
+$color-text: #eee;
+$color-text-inverted: #333;
+$color-text-lite: #999;
+$color-text-hard: #111;
+
+$color-link: $color-primary;
+$color-link-hover: $color-success;
+$color-bg: $color-addition;
+$color-bg-card: #2F3D40; 
+$color-bg-card-alt: #1a2527; 
+$color-info: $color-primary;
+
+$std-mg-xsm: 5px;
+$std-mg-sm: 8px;
+$std-mg-md: 12px;
+$std-mg-lg: 18px;
+$std-mg-xl: 35px;
+$std-mg-xxl: 40px;
+
+$std-pd-xsm: 5px;
+$std-pd-sm: 8px;
+$std-pd-md: 12px;
+$std-pd-lg: 18px;
+$std-pd-xl: 35px;
+$std-pd-xxl: 40px;
+
+$fsize-xsm: .75em;
+$fsize-sm: .9em;
+$fsize-md: 1em;
+$fsize-lg: 1.1em;
+$fsize-xl: 1.4em;
+$fsize-xxl: 2em;
+
+$border-rad-sm: 3px;
+$border-rad-md: 4px;
+$border-rad-lg: 6px;
+$border-rad-xl: 8px;
+
+$border-1: 1px solid #aaa;
+$border-2: 1px solid #ddd;
+
+$shadow-sm: 0 0 2px 3px rgba(40, 40, 40, .05);
+$shadow-md: 1px 1px 3px 3px rgba(40, 40, 40, .05);
+$trans-du: .15s;
+
+$sizes: (
+	"xs": 320, 
+	"sm": 576, 
+	"md": 768, 
+	"lg": 992, 
+	"xl": 1200
+);
+
+$page-content-max-width: 1200px;
+$font-family: 'Nunito', sans-serif;
