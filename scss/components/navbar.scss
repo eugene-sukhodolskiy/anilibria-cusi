@@ -79,6 +79,16 @@
 					color: $color-text;
 					font-size: $fsize-xl;
 					border-bottom: 0;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: center;
+					gap: 10px;
+				}
+
+				img {
+					width: 35px;
+					height: 35px;
 				}
 			}
 
@@ -134,8 +144,8 @@
 		justify-content: flex-end;
 
 		@include media("max", "xl") {
-		  flex-direction: column;
-		  margin-top: $std-mg-lg;
+			flex-direction: column;
+			margin-top: $std-mg-lg;
 		}
 	}
 }

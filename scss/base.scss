@@ -340,15 +340,15 @@ hr {
 }
 
 .global-alerts-container {
-	$gl-alerts-width: 400px;
 	position: fixed;
 	height: auto;
 	width: 100%;
-	max-width: $gl-alerts-width;
+	max-width: 400px;
 	bottom: 0;
 	left: 50%;
-	margin-left: -$gl-alerts-width / 2;
+	margin-left: -200px;
 	height: auto;
+	z-index: 999999;
 
 	@include media("max", "sm") {
 		margin-left: 0;
@@ -357,4 +357,37 @@ hr {
 		left: $std-mg-md;
 		right: $std-mg-md;
 	} 
+}
+
+.page-container {
+	position: relative;
+
+	.page {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		width: 100%;
+		top: 60px;
+		transition-duration: $trans-du;
+		transition-property: opacity, top, visibility;
+	}
+
+	.page.show {
+		top: 0;
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.preload-spinner {
+	width: 100%;
+	margin: $std-mg-xxl 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.spinner {
+		width: 50px;
+		height: 50px;
+	}
 }

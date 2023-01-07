@@ -1,0 +1,13 @@
+.page.home {
+	& > .card {
+		background-color: transparent;
+	}
+
+	.render-container {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: $std-mg-md;
+		margin-top: $std-mg-lg;
+	}
+}

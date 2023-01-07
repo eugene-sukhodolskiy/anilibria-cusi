@@ -1,0 +1,73 @@
+.component.alert {
+	width: 100%;
+	min-height: 37px;
+	margin: $std-mg-lg 0;
+	border-radius: $border-rad-md;
+	position: relative;
+	color: $color-text;
+	visibility: hidden;
+	opacity: 0;
+	top: 7px;
+	transition-duration: $trans-du;
+	transition-property: top, visibility, opacity;
+
+	&.show {
+		top: 0;
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.content {
+		width: 100%;
+		padding: $std-pd-md;
+		padding-right: $std-pd-lg;
+		font-size: 15px;
+		color: inherit;
+		box-sizing: border-box;
+	}
+
+	.close-alert {
+		background: transparent;
+		color: inherit;
+		border: 0;
+		position: absolute;
+		font-size: 20px;
+		right: 6px;
+		top: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 100%;
+		transition-duration: $trans-du;
+		transition-property: transform, top, right;
+
+		&:hover {
+			transform: rotate(90deg);
+			top: 9px;
+			right: 7px;
+		}
+	}
+
+	&.alert-danger {
+		background-color: $color-danger;
+		color: $color-text;
+	}
+
+	&.alert-warning {
+		background-color: $color-warning;
+		color: $color-text-inverted;
+	}
+
+	&.alert-info {
+		background-color: $color-info;
+		color: $color-text-inverted;
+	}
+
+	&.alert-success {
+		background-color: $color-success;
+	}
+
+	&.alert-default {
+		background-color: $color-addition;
+	}
+}
