@@ -32,13 +32,14 @@ class Router {
 		}
 
 		this.pages[pageId]?.classList.add("show");
+		window.scrollTo({ top: 0 });
 		this.currentPage = pageId;
 	}
 
 	urlMonitor() {
 		setInterval(() => {
 			const route = document.location.hash.split("page-")[1];
-			if(route != this.currentPage) {
+			if(route?.split(";")[0] != this.currentPage) {
 				this.goToPage(route?.split(";")[0]);
 			}
 		}, 10);

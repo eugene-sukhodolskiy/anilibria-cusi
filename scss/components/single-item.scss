@@ -1,0 +1,45 @@
+.component.single-item {
+	& > .std-row {
+		align-items: flex-start;
+		flex-wrap: nowrap;
+	}
+
+	.component.thumbnail {
+		.thumbnail-img {
+			width: 320px;
+		}
+	}
+
+
+	.item-info {
+		display: flex;
+		flex-direction: column;
+		gap: $std-mg-sm;
+
+		.title {
+			font-size: $fsize-xl;
+			font-weight: normal;
+
+			strong {
+				color: $color-primary;
+			}
+		}
+
+		.time-period {
+			font-size: $fsize-lg;
+
+			&::first-letter {
+				text-transform: uppercase;
+			}
+		}
+
+		.description {
+			line-height: 1.3em;
+		}
+	}
+
+	.player {
+		width: 100%;
+		height: 650px;
+	}
+}

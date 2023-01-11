@@ -3,12 +3,16 @@ const app = function() {
 	
 	(() => {
 		this.router.addEvent("login", (router) => {
+			document.querySelector("#single .render-container").innerHTML = "";
+
 			if(getSessionId()) {
 				document.location.hash = "page-" + router.notFoundPageId;
 			}
 		});
 
 		this.router.addEvent("home", (router) => {
+			document.querySelector("#single .render-container").innerHTML = "";
+			
 			document.querySelector("#home .preload-spinner").classList.remove("dnone");
 			const xhr = new XMLHttpRequest();
 			xhr.open("GET", "http://api.anilibria.tv/api/v2/getUpdates?limit=20");
@@ -18,6 +22,56 @@ const app = function() {
 					document.querySelector("#home .preload-spinner").classList.add("dnone");
 					const resp = JSON.parse(xhr.response);
 					for(let i = 0; i < resp.length; i++) {
+						renderContainer.appendChild(this.renderer.renderItemCard(resp[i]).node);
+					}
+				} else {
+					const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+				}
+			}
+
+			xhr.onerror = () => {
+				const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+			}
+			xhr.send();
+		});
+
+		this.router.addEvent("single", (router) => {
+			document.querySelector("#single .preload-spinner").classList.remove("dnone");
+			const xhr = new XMLHttpRequest();
+			const id = document.location.hash.split("id")[1];
+			console.log("single item", id);
+
+			xhr.open("GET", "http://api.anilibria.tv/api/v2/getTitle?id="+id);
+			xhr.onload = () => {
+				const renderContainer = document.querySelector("#single .render-container");
+				if(xhr.status == 200) {
+					document.querySelector("#single .preload-spinner").classList.add("dnone");
+					const resp = JSON.parse(xhr.response);
+					renderContainer.appendChild(this.renderer.renderSingle(resp).node);
+				} else {
+					const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+				}
+			}
+
+			xhr.onerror = () => {
+				const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+			}
+			xhr.send();
+		});
+
+		this.router.addEvent("favourites", (router) => {
+			document.querySelector("#favourites .render-container").innerHTML = "";
+			
+			document.querySelector("#favourites .preload-spinner").classList.remove("dnone");
+			const sessId = getSessionId();
+			const xhr = new XMLHttpRequest();
+			xhr.open("GET", "http://api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100");
+			xhr.onload = () => {
+				const renderContainer = document.querySelector("#favourites .render-container");
+				if(xhr.status == 200) {
+					document.querySelector("#favourites .preload-spinner").classList.add("dnone");
+					const resp = JSON.parse(xhr.response);
+					for(let i = resp.length-1; i >= 0 ; i--) {
 						renderContainer.appendChild(this.renderer.renderItemCard(resp[i]).node);
 					}
 				} else {
