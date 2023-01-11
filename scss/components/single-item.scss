@@ -36,10 +36,18 @@
 		.description {
 			line-height: 1.3em;
 		}
+
+		.control-panel {
+			width: 100%;
+		}
 	}
 
 	.player {
 		width: 100%;
 		height: 650px;
+		margin-top: $std-mg-md;
+		border-radius: $border-rad-lg;
+		overflow: hidden;
 	}
+
 }

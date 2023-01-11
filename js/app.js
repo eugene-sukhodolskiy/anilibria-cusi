@@ -35,7 +35,7 @@ const app = function() {
 			xhr.send();
 		});
 
-		this.router.addEvent("single", (router) => {
+		this.router.addEvent("single", (router) => {			
 			document.querySelector("#single .preload-spinner").classList.remove("dnone");
 			const xhr = new XMLHttpRequest();
 			const id = document.location.hash.split("id")[1];
@@ -60,10 +60,14 @@ const app = function() {
 		});
 
 		this.router.addEvent("favourites", (router) => {
-			document.querySelector("#favourites .render-container").innerHTML = "";
+			document.querySelector("#single .render-container").innerHTML = "";
 			
 			document.querySelector("#favourites .preload-spinner").classList.remove("dnone");
 			const sessId = getSessionId();
+			if(!sessId) {
+				return document.location.hash = "#page-login";
+			}
+
 			const xhr = new XMLHttpRequest();
 			xhr.open("GET", "http://api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100");
 			xhr.onload = () => {
