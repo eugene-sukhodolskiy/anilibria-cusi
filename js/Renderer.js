@@ -53,9 +53,48 @@ class Renderer {
 		return item;
 	}
 
+	renderTorrents(item) {
+		let html = `<div class="component torrents">`;
+
+		for(let i=0; i<item.torrents.list.length; i++) {
+			const torrent = item.torrents.list[i];
+			let size = torrent.total_size / 1024 / 1024;
+			size = (size > 1024) 
+				? (size / 1024).toString().split(".")[0] + "." + (size / 1024).toString().split(".")[1].substr(0,2) + " ГБ" 
+				: size.toString().split(".")[0] + "." +  size.toString().split(".")[1].substr(0,2) + " МБ";
+			html += `
+				<div class="torrent" data-torrent-id="${torrent.torrent_id}">
+					<div class="series">Серии ${torrent.series.string}</div>
+					<div class="quality">${torrent.quality.string}</div>
+					<div class="size">${size}</div>
+					<div class="seed-leech">
+						<span class="seed">
+							<span class="mdi mdi-arrow-up"></span>
+							${torrent.seeders}
+						</span>
+						<span class="leech">
+							<span class="mdi mdi-arrow-down"></span>
+							${torrent.leechers}
+						</span>
+					</div>
+					<div class="download">
+						<a href="//anilibria.tv${torrent.url}" class="std-btn btn-success" target="_blank">
+							<span class="mdi mdi-download"></span>
+							Скачать
+						</a>
+					</div>
+				</div>
+			`;
+		}
+
+		html += "</div>";
+		return html;
+	}
+
 	renderSingle(item) {
 		let genres = item.genres.join(", ");
 		const thumb = this.renderThumbnail(item);
+		const torrents = this.renderTorrents(item);
 
 		let html = `<div class="component single-item">
 			<div class="std-row">
@@ -78,6 +117,7 @@ class Renderer {
 							</span>
 						</button>
 					</div>
+					${torrents}
 				</div>
 			</div>
 

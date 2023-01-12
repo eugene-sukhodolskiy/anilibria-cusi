@@ -10,7 +10,6 @@
 		}
 	}
 
-
 	.item-info {
 		display: flex;
 		flex-direction: column;
@@ -39,6 +38,7 @@
 
 		.control-panel {
 			width: 100%;
+			margin: $std-mg-md 0;
 		}
 	}
 

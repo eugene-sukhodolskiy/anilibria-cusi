@@ -1,0 +1,28 @@
+.component.torrents {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	background-color: $color-addition;
+	border-radius: $border-rad-lg;
+
+	.torrent {
+		display: grid;
+		grid-template-columns: max-content 160px 80px max-content max-content;
+		grid-gap: $std-mg-md;
+		justify-content: space-between;
+		align-items: center;
+		padding: $std-pd-sm $std-pd-md;
+
+		.seed {
+			.mdi {
+				color: $color-success;
+			}
+		}
+
+		.leech {
+			.mdi {
+				color: $color-danger;
+			}
+		}
+	}
+}
