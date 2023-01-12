@@ -81,7 +81,7 @@ class Renderer {
 				</div>
 			</div>
 
-			<div class="player" id="main-player"></div>
+			<div class="player" id="main-player-${item.id}"></div>
 		</div>`;
 
 		return {
@@ -96,7 +96,7 @@ class Renderer {
 		item = container.querySelector(".single-item");
 
 		const playerData = {
-			id: "main-player",
+			id: "main-player-"+data.id,
 			default_quality: "720p",
 			preroll_deny: "",
 			file: []

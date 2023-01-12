@@ -1,7 +1,7 @@
 const initRoutesEvents = (app) => {
 	app.router.addEvent("jumpTo", (router, pageId) => {
 		document.querySelector("#single .render-container").innerHTML = "";
-		document.querySelector(`#${pageId} .preload-spinner`).classList.remove("dnone");
+		document.querySelector(`#${pageId} .preload-spinner`)?.classList.remove("dnone");
 	});
 
 	app.router.addEvent("login", (router) => {
