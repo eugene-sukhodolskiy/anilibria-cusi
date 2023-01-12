@@ -3,11 +3,26 @@
 	font-size: 0;
 	margin-bottom: $std-mg-sm;
 
-	.thumbnail-img {
+
+	.thumbnail-img, .poster-placeholder {
 		width: 100%;
 		height: auto;
 		object-fit: cover;
 		border-radius: $border-rad-lg;
+	}
+
+	.thumbnail-img {
+		position: absolute;
+		top: 0;
+		opacity: 0;
+		transition-duration: $trans-du;
+		transition-property: opacity;
+	}
+	
+	&.load-ready {
+		.thumbnail-img {
+			opacity: 1;
+		}
 	}
 
 	.series, .status {

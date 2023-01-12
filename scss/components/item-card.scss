@@ -5,11 +5,10 @@
 	background-color: $color-bg-card-alt;
 	box-sizing: border-box;
 	border: 1px solid transparent;
-	opacity: 0;
 	transition-duration: $trans-du;
-	transition-property: border-color, opacity;
+	transition-property: border-color;
 
-	&.load-ready {
+	&.load-ready .thumbnail-img {
 		opacity: 1;
 	}
 

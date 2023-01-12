@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="/css/style.min.css">
 
 	<script src="/libs/player.js"></script>
+	<script src="/js/functions.js"></script>
+	<script src="/js/routes-events.js"></script>
 	<script src="/js/Alert.js"></script>
 	<script src="/js/Router.js"></script>
 	<script src="/js/Auth.js"></script>
@@ -16,6 +18,7 @@
 </head>
 <body>
 	<div class="dnone">
+		<img src="/imgs/poster-placeholder.jpg" class="poster-placeholder">
 		<div class="component alert" data-id="alert-id-reference">
 			<div class="content"></div>
 			<button class="close-alert" data-close-alert-id="alert-id-reference">
@@ -42,7 +45,7 @@
 					<div class="component search-bar">
 						<div class="form-group search-field-container">
 							<input 
-								type="text" 
+								type="search" 
 								name="search" 
 								class="std-input search-field"
 								value=""
@@ -136,13 +139,9 @@
 			</div>
 
 			<div class="page favourites" id="favourites">
-				<h2>Избранное</h2>
 				<div class="card">
-					<div class="preload-spinner">
-						<div class="loadingio-spinner-dual-ball-9pyhqeozhs"><div class="ldio-jyt13pqa73">
-						<div></div><div></div><div></div>
-						</div></div>
-					</div>
+					<h2>Избранное</h2>
+					<div class="preload-spinner"></div>
 					<div class="render-container"></div>
 				</div>
 			</div>
@@ -156,22 +155,22 @@
 			<div class="page home" id="home">
 				<div class="card">
 					<h2>Последнее добавленое</h2>
-					<div class="preload-spinner">
-						<div class="loadingio-spinner-dual-ball-9pyhqeozhs"><div class="ldio-jyt13pqa73">
-						<div></div><div></div><div></div>
-						</div></div>
-					</div>
+					<div class="preload-spinner"></div>
 					<div class="render-container"></div>
 				</div>
 			</div>
 
 			<div class="page single" id="single">
 				<div class="card">
-					<div class="preload-spinner">
-						<div class="loadingio-spinner-dual-ball-9pyhqeozhs"><div class="ldio-jyt13pqa73">
-						<div></div><div></div><div></div>
-						</div></div>
-					</div>
+					<div class="preload-spinner"></div>
+					<div class="render-container"></div>
+				</div>
+			</div>
+
+			<div class="page search" id="search">
+				<div class="card">
+					<h2>Поиск</h2>
+					<div class="preload-spinner"></div>
 					<div class="render-container"></div>
 				</div>
 			</div>

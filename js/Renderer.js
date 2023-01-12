@@ -1,17 +1,16 @@
 class Renderer {
-	constructor() {
-
-	}
+	constructor() {}
 
 	renderItemCard(item) {
 		let genres = item.genres.join(", ");
 
 		let html = `<div class="component card item-card" data-id="${item.id}">
 			<div class="component thumbnail">
+				<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
+				<img src="/imgs/poster-placeholder.jpg" class="poster-placeholder">
 				<div class="hover-effect">
 					<span class="mdi mdi-arrow-right"></span>
 				</div>
-				<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
 				<div class="status">${item.status.string}</div>
 				<div class="series">Серий ${item.player.series.last}</div>
 			</div>
@@ -53,10 +52,11 @@ class Renderer {
 		let html = `<div class="component single-item">
 			<div class="std-row">
 				<div class="component thumbnail">
+					<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
+					<img src="/imgs/poster-placeholder.jpg" class="poster-placeholder">
 					<div class="hover-effect">
 						<span class="mdi mdi-arrow-right"></span>
 					</div>
-					<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
 					<div class="status">${item.status.string}</div>
 					<div class="series">Серий ${item.player.series.last}</div>
 				</div>
@@ -81,9 +81,7 @@ class Renderer {
 				</div>
 			</div>
 
-			<div class="player" id="main-player">
-				
-			</div>
+			<div class="player" id="main-player"></div>
 		</div>`;
 
 		return {
@@ -182,6 +180,16 @@ class Renderer {
 			});
 		}
 
+		item.querySelector(".thumbnail-img").addEventListener("load", e => {
+			e.currentTarget.parentNode.classList.add("load-ready");
+		});
+
 		return item;
+	}
+
+	renderPreloadSpinner() {
+		return `<div class="loadingio-spinner-dual-ball-9pyhqeozhs"><div class="ldio-jyt13pqa73">
+			<div></div><div></div><div></div>
+			</div></div>`;
 	}
 }
