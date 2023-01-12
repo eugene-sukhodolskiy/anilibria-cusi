@@ -1,10 +1,8 @@
 class Renderer {
 	constructor() {}
 
-	renderItemCard(item) {
-		let genres = item.genres.join(", ");
-
-		let html = `<div class="component card item-card" data-id="${item.id}">
+	renderThumbnail(item) {
+		return `
 			<div class="component thumbnail">
 				<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
 				<img src="/imgs/poster-placeholder.jpg" class="poster-placeholder">
@@ -14,6 +12,15 @@ class Renderer {
 				<div class="status">${item.status.string}</div>
 				<div class="series">Серий ${item.player.series.last}</div>
 			</div>
+		`;
+	}
+
+	renderItemCard(item) {
+		let genres = item.genres.join(", ");
+		const thumb = this.renderThumbnail(item);
+
+		let html = `<div class="component card item-card" data-id="${item.id}">
+			${thumb}
 			<div class="info">
 				<div class="title">${item.names.ru} (<span class="year">${item.season.year}</span>)</div>
 				<div class="meta">
@@ -48,18 +55,11 @@ class Renderer {
 
 	renderSingle(item) {
 		let genres = item.genres.join(", ");
+		const thumb = this.renderThumbnail(item);
 
 		let html = `<div class="component single-item">
 			<div class="std-row">
-				<div class="component thumbnail">
-					<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
-					<img src="/imgs/poster-placeholder.jpg" class="poster-placeholder">
-					<div class="hover-effect">
-						<span class="mdi mdi-arrow-right"></span>
-					</div>
-					<div class="status">${item.status.string}</div>
-					<div class="series">Серий ${item.player.series.last}</div>
-				</div>
+				${thumb}
 				<div class="item-info">
 					<h2 class="title"><strong>${item.names.ru}</strong> / ${item.names.en}</h2>
 					<div class="time-period">${item.season.string} ${item.season.year}</div>
@@ -121,7 +121,7 @@ class Renderer {
 		if(sessId) {
 			item.querySelector(".fav-btn .state.unset-from").classList.add("dnone");
 			item.querySelector(".fav-btn .state.set-to").classList.remove("dnone");
-			
+
 			getFavouritesList(resp => {
 				for(let i=0; i<resp.length; i++) {
 					if(data.id == resp[i].id) {

@@ -1,16 +1,16 @@
 const initRoutesEvents = (app) => {
-	app.router.addEvent("login", (router) => {
+	app.router.addEvent("jumpTo", (router, pageId) => {
 		document.querySelector("#single .render-container").innerHTML = "";
+		document.querySelector(`#${pageId} .preload-spinner`).classList.remove("dnone");
+	});
 
+	app.router.addEvent("login", (router) => {
 		if(getSessionId()) {
 			document.location.hash = "page:" + router.notFoundPageId;
 		}
 	});
 
 	app.router.addEvent("home", (router) => {
-		document.querySelector("#single .render-container").innerHTML = "";
-		document.querySelector("#home .preload-spinner").classList.remove("dnone");
-
 		stdXHR(
 			"GET", 
 			"//api.anilibria.tv/api/v2/getUpdates?limit=40",
@@ -27,7 +27,6 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("single", (router) => {			
-		document.querySelector("#single .preload-spinner").classList.remove("dnone");
 		const id = document.location.hash.split("id")[1];
 
 		stdXHR(
@@ -44,8 +43,6 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("favourites", (router) => {
-		document.querySelector("#single .render-container").innerHTML = "";
-		document.querySelector("#favourites .preload-spinner").classList.remove("dnone");
 		getFavouritesList(resp => {
 			const renderContainer = document.querySelector("#favourites .render-container");
 			document.querySelector("#favourites .preload-spinner").classList.add("dnone");
@@ -57,8 +54,6 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("search", (router) => {
-		document.querySelector("#single .render-container").innerHTML = "";
-		document.querySelector("#search .preload-spinner").classList.remove("dnone");
 		let squery = document.location.hash.split("sq:")[1];
 		document.querySelector(`[name="search"]`).value = decodeURI(squery);
 
@@ -78,9 +73,6 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("new-series", (router) => {
-		document.querySelector("#single .render-container").innerHTML = "";
-		document.querySelector("#new-series .preload-spinner").classList.remove("dnone");
-
 		stdXHR(
 			"GET", 
 			"//api.anilibria.tv/api/v2/getUpdates?limit=60",

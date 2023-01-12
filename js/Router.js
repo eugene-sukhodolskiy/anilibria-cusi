@@ -26,6 +26,7 @@ class Router {
 		} );
 
 		if(typeof this.pages[pageId] != "undefined") {
+			this.events["jumpTo"] && this.events["jumpTo"](this, pageId);
 			this.events[pageId] && this.events[pageId](this);
 			this.pages[pageId].style.zIndex = this.zindex;
 			this.zindex++;
@@ -45,7 +46,7 @@ class Router {
 		}, 10);
 	}
 
-	addEvent(pageId, callback) {
-		this.events[pageId] = callback;
+	addEvent(name, callback) {
+		this.events[name] = callback;
 	}
 }

@@ -372,12 +372,16 @@ hr {
 		position: absolute;
 		width: 100%;
 		top: 60px;
+		max-height: 100vh;
+		overflow: hidden;
 		transition-duration: $trans-du;
-		transition-property: opacity, top, visibility;
+		transition-property: opacity, top, visibility, overflow, max-height;
 	}
 
 	.page.show {
 		top: 0;
+		overflow: initial;
+		max-height: initial;
 		opacity: 1;
 		visibility: visible;
 	}
