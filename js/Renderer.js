@@ -66,7 +66,7 @@ class Renderer {
 				<div class="torrent" data-torrent-id="${torrent.torrent_id}">
 					<div class="series">Серии ${torrent.series.string}</div>
 					<div class="quality">${torrent.quality.string}</div>
-					<div class="size">${size}</div>
+					
 					<div class="seed-leech">
 						<span class="seed">
 							<span class="mdi mdi-arrow-up"></span>
@@ -80,7 +80,8 @@ class Renderer {
 					<div class="download">
 						<a href="//anilibria.tv${torrent.url}" class="std-btn btn-success" target="_blank">
 							<span class="mdi mdi-download"></span>
-							Скачать
+							<span class="btn-label">Скачать</span>
+							<span class="btn-tsize">${size}</span>
 						</a>
 					</div>
 				</div>

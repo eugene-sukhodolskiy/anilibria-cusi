@@ -7,11 +7,21 @@
 
 	.torrent {
 		display: grid;
-		grid-template-columns: max-content 160px 80px max-content max-content;
+		grid-template-columns: max-content 160px max-content max-content;
 		grid-gap: $std-mg-md;
 		justify-content: space-between;
 		align-items: center;
 		padding: $std-pd-sm $std-pd-md;
+
+		@include media("max", "lg") {
+			grid-template-columns: max-content 160px max-content;
+			grid-gap: $std-mg-sm;
+		}
+
+		@include media("max", "sm") {
+			font-size: 0.75em;
+			grid-template-columns: max-content max-content max-content;
+		}
 
 		.seed {
 			.mdi {
@@ -24,5 +34,21 @@
 				color: $color-danger;
 			}
 		}
+		
+		@include media("max", "lg") {
+	  	.seed-leech {
+	  		display: none;
+	  	}
+
+	  	.download .btn-label {
+	  		display: none;
+	  	}
+
+	  	.download .btn-tsize {
+	  		visibility: visible;
+	  		opacity: 1;
+	  	}
+		}
 	}
+
 }

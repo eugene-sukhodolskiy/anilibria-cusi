@@ -2,11 +2,20 @@
 	& > .std-row {
 		align-items: flex-start;
 		flex-wrap: nowrap;
+
+		@include media("max", "md") {
+			flex-wrap: wrap;
+			flex-direction: column;
+		}
 	}
 
 	.component.thumbnail {
 		.thumbnail-img, .poster-placeholder {
 			width: 320px;
+			
+			@include media("max", "md") {
+				width: 100%;
+			}
 		}
 	}
 
@@ -48,6 +57,17 @@
 		margin-top: $std-mg-md;
 		border-radius: $border-rad-lg;
 		overflow: hidden;
-	}
+		
+		@include media("max", "lg") {
+			height: 520px;
+		}
 
+		@include media("max", "md") {
+			height: 410px;
+		}
+
+		@include media("max", "sm") {
+			height: 300px;
+		}
+	}
 }
