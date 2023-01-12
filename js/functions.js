@@ -27,7 +27,7 @@ const initBaseEvents = app => {
 		e.preventDefault();
 		if(e.keyCode == 13) {
 			let squery = e.currentTarget.value.trim();
-			document.location.hash = `page-search;sq:${squery}`;
+			document.location.hash = `page:search;sq:${squery}`;
 			e.currentTarget.blur();
 		}
 	});
@@ -41,3 +41,38 @@ const getSessionId = () => {
 
 	return false;
 };
+
+const stdXHR = (method, url, onloadCallback) => {
+	const xhr = new XMLHttpRequest();
+	xhr.open(method, url);
+	
+	xhr.onload = () => {
+		if(xhr.status == 200) {
+			onloadCallback(xhr);
+		} else {
+			const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+		}
+	}
+
+	xhr.onerror = () => {
+		const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+	}
+
+	return xhr;
+}
+
+const getFavouritesList = callback => {
+	const sessId = getSessionId();
+	if(!sessId) {
+		return document.location.hash = "#page:login";
+	}
+
+	stdXHR(
+		"GET", 
+		"//api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100",
+		xhr => {
+			const resp = JSON.parse(xhr.response);
+			callback(resp);
+		}
+	).send();
+}

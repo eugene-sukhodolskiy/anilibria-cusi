@@ -5,6 +5,10 @@
 	padding: 0;
 }
 
+[type="search"]::-webkit-search-cancel-button{
+  display: none;    
+}
+
 body {
 	background-color: $color-bg;
 	color: $color-text; 

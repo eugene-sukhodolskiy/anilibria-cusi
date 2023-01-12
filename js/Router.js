@@ -18,7 +18,7 @@ class Router {
 
 	goToPage(pageId) {
 		if(typeof pageId == "undefined" || typeof this.pages[pageId] == "undefined") {
-			return document.location.hash = `page-${this.defaultPageId}`;
+			return document.location.hash = `page:${this.defaultPageId}`;
 		}
 
 		this.container.querySelectorAll(".page.show").forEach( p => {
@@ -38,7 +38,7 @@ class Router {
 
 	urlMonitor() {
 		setInterval(() => {
-			const route = document.location.hash.split("page-")[1];
+			const route = document.location.hash.split("page:")[1];
 			if(route?.split(";")[0] != this.currentPage) {
 				this.goToPage(route?.split(";")[0]);
 			}

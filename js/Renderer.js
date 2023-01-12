@@ -36,7 +36,7 @@ class Renderer {
 
 		item.addEventListener("click", e => {
 			const id = e.currentTarget.getAttribute("data-id");
-			document.location.hash = `page-single;id${id}`;
+			document.location.hash = `page:single;id${id}`;
 		});
 
 		item.querySelector(".thumbnail-img").addEventListener("load", e => {
@@ -119,64 +119,44 @@ class Renderer {
 
 		const sessId = getSessionId();
 		if(sessId) {
-			const xhr = new XMLHttpRequest();
-			xhr.open("GET", "http://api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100");
-			xhr.onload = () => {
-				item.querySelector(".fav-btn .state.unset-from").classList.add("dnone");
-				item.querySelector(".fav-btn .state.set-to").classList.remove("dnone");
-				if(xhr.status == 200) {
-					const resp = JSON.parse(xhr.response);
-					for(let i=0; i<resp.length; i++) {
-						if(data.id == resp[i].id) {
-							item.querySelector(".fav-btn .state.unset-from").classList.remove("dnone");
-							item.querySelector(".fav-btn .state.set-to").classList.add("dnone");
-							break;
-						}
+			item.querySelector(".fav-btn .state.unset-from").classList.add("dnone");
+			item.querySelector(".fav-btn .state.set-to").classList.remove("dnone");
+			
+			getFavouritesList(resp => {
+				for(let i=0; i<resp.length; i++) {
+					if(data.id == resp[i].id) {
+						item.querySelector(".fav-btn .state.unset-from").classList.remove("dnone");
+						item.querySelector(".fav-btn .state.set-to").classList.add("dnone");
+						break;
 					}
-					
-					item.querySelector(".fav-btn").classList.remove("dnone");
-				} else {
-					const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
 				}
-			}
-
-			xhr.onerror = () => {
-				const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
-			}
-			xhr.send();
+				
+				item.querySelector(".fav-btn").classList.remove("dnone");
+			});
 			
 			// Add Listener for fav btn
 			item.querySelector(".fav-btn").addEventListener("click", e => {
-				console.log("click fav");
-				const xhr = new XMLHttpRequest();
 				if(e.currentTarget.querySelector(".unset-from").classList.contains("dnone")) {
 					// ADD TO FAVOURITES
-					xhr.open("PUT", "http://api.anilibria.tv/api/v2/addFavorite?session="+sessId+"&title_id="+data.id);
-					xhr.onload = () => {
-						if(xhr.status == 200) {
+					stdXHR(
+						"PUT", 
+						"//api.anilibria.tv/api/v2/addFavorite?session="+sessId+"&title_id="+data.id,
+						xhr => {
 							item.querySelector(".fav-btn .state.unset-from").classList.remove("dnone");
 							item.querySelector(".fav-btn .state.set-to").classList.add("dnone");
-						} else {
-							const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
 						}
-					}
+					).send();
 				} else {
 					// REMOVE FROM FAVOURITES
-					xhr.open("DELETE", "http://api.anilibria.tv/api/v2/delFavorite?session="+sessId+"&title_id="+data.id);
-					xhr.onload = () => {
-						if(xhr.status == 200) {
+					stdXHR(
+						"DELETE", 
+						"//api.anilibria.tv/api/v2/delFavorite?session="+sessId+"&title_id="+data.id,
+						xhr => {
 							item.querySelector(".fav-btn .state.unset-from").classList.add("dnone");
 							item.querySelector(".fav-btn .state.set-to").classList.remove("dnone");
-						} else {
-							const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
 						}
-					}
+					).send();
 				}
-
-				xhr.onerror = () => {
-					const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
-				}
-				xhr.send();
 			});
 		}
 

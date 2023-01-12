@@ -59,7 +59,7 @@ class Auth {
 
 	logout() {
 		localStorage.removeItem("sessionId");
-		document.location.hash = "#page-login";
+		document.location.hash = "#page:login";
 		document.querySelector(".logout-btn").classList.add("dnone");
 		document.querySelector(".go-login-page-btn").classList.remove("dnone");
 	}

@@ -34,7 +34,7 @@
 			<div class="container navbar-container">
 				<div class="logo-wrapper">
 					<div class="logo">
-						<a href="#page-home" class="logo-link">
+						<a href="#page:home" class="logo-link">
 							<img src="/imgs/logo.webp" alt="Anilibria">
 							Anilibria Cusi
 						</a>
@@ -62,11 +62,11 @@
 					<nav class="component navigation-main">
 						<ul class="nav-list">
 							<li class="nav-list-item">
-								<a href="#page-home" class="nav-link">Главная</a>
+								<a href="#page:home" class="nav-link">Главная</a>
 							</li>
 							<li class="nav-list-item">
 								<a 
-									href="#page-favourites" 
+									href="#page:favourites" 
 									class="nav-link"
 								>Избранное</a>
 							</li>
@@ -88,7 +88,7 @@
 				<div class="userbar-wrapper">
 					<div class="auth-btns-group">
 						<a 
-							href="#page-login" 
+							href="#page:login" 
 							class="std-btn btn-success go-login-page-btn dnone"
 						>Войти</a>
 						<button 
@@ -170,6 +170,14 @@
 			<div class="page search" id="search">
 				<div class="card">
 					<h2>Поиск</h2>
+					<div class="preload-spinner"></div>
+					<div class="render-container"></div>
+				</div>
+			</div>
+
+			<div class="page new-series" id="new-series">
+				<div class="card">
+					<h2>Новые серии</h2>
 					<div class="preload-spinner"></div>
 					<div class="render-container"></div>
 				</div>
