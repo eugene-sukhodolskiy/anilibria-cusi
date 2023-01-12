@@ -5,7 +5,7 @@ class Renderer {
 		return `
 			<div class="component thumbnail">
 				<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
-				<img src="/imgs/poster-placeholder.jpg" class="poster-placeholder">
+				<img src="./imgs/poster-placeholder.jpg" class="poster-placeholder">
 				<div class="hover-effect">
 					<span class="mdi mdi-arrow-right"></span>
 				</div>
