@@ -11,15 +11,9 @@ const initBaseEvents = app => {
 
 	document.querySelector(".btn-nav-on-mob-show").addEventListener("click", e => {
 		if(e.currentTarget.classList.contains("active")) {
-			e.currentTarget.classList.remove("active");
-			document.querySelectorAll(".navigation-main-wrapper, .userbar-wrapper").forEach(item => {
-				item.classList.remove("show");
-			});
+			hideMobNav();
 		}else{
-			e.currentTarget.classList.add("active");
-			document.querySelectorAll(".navigation-main-wrapper, .userbar-wrapper").forEach(item => {
-				item.classList.add("show");
-			});
+			showMobNav();
 		}
 	});
 
@@ -75,4 +69,18 @@ const getFavouritesList = callback => {
 			callback(resp);
 		}
 	).send();
+}
+
+const showMobNav = () => {
+	document.querySelector(".btn-nav-on-mob-show").classList.add("active");
+	document.querySelectorAll(".navigation-main-wrapper, .userbar-wrapper").forEach(item => {
+		item.classList.add("show");
+	});
+}
+
+const hideMobNav = () => {
+	document.querySelector(".btn-nav-on-mob-show").classList.remove("active");
+	document.querySelectorAll(".navigation-main-wrapper, .userbar-wrapper").forEach(item => {
+		item.classList.remove("show");
+	});
 }

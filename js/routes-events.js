@@ -3,6 +3,7 @@ const initRoutesEvents = (app) => {
 		document.querySelectorAll("#single .render-container").forEach(i => { i.innerHTML = ""; });
 		document.querySelector(`#${pageId} .preload-spinner`)?.classList.remove("dnone");
 		document.querySelector(`[name="search"]`).value = "";
+		hideMobNav();
 	});
 
 	app.router.addEvent("login", (router) => {
