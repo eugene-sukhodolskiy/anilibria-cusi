@@ -76,4 +76,32 @@ const initRoutesEvents = (app) => {
 			}
 		).send();
 	});
+
+	app.router.addEvent("new-series", (router) => {
+		document.querySelector("#single .render-container").innerHTML = "";
+		document.querySelector("#new-series .preload-spinner").classList.remove("dnone");
+
+		stdXHR(
+			"GET", 
+			"//api.anilibria.tv/api/v2/getUpdates?limit=60",
+			xhr => {
+				const resp = JSON.parse(xhr.response);
+				const renderContainer = document.querySelector("#new-series .render-container");
+				renderContainer.innerHTML = "";
+				document.querySelector("#new-series .preload-spinner").classList.add("dnone");
+
+				getFavouritesList(favs => {
+					for(let i = 0; i < resp.length; i++) {
+						for(let j = 0; j < favs.length; j++) {
+							if(favs[j].id == resp[i].id) {
+								renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
+								break;
+							}
+						}
+
+					}
+				});
+			}
+		).send();
+	});
 }
