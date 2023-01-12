@@ -13,6 +13,7 @@ class Router {
 		}
 
 		this.currentPage = "default-val";
+		this.currentPath = "default-val";
 		this.zindex = 1;
 	}
 
@@ -35,12 +36,14 @@ class Router {
 		this.pages[pageId]?.classList.add("show");
 		window.scrollTo({ top: 0 });
 		this.currentPage = pageId;
+		this.currentPath = document.location.hash;
 	}
 
 	urlMonitor() {
 		setInterval(() => {
 			const route = document.location.hash.split("page:")[1];
-			if(route?.split(";")[0] != this.currentPage) {
+			//route?.split(";")[0] != this.currentPage
+			if(document.location.hash != this.currentPath) {
 				this.goToPage(route?.split(";")[0]);
 			}
 		}, 10);
