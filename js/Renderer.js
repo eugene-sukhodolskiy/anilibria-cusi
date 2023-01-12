@@ -145,7 +145,7 @@ class Renderer {
 		for(let i in data.player.playlist) {
 			playerData.file.push({
 				id: "s"+i,
-				skip: null,
+				skip: data.player.playlist[i].skips.opening.length ? data.player.playlist[i].skips.opening.join("-") : null,
 				title: `Серия ${i}`,
 				poster: null,
 				download: null,
