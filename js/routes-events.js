@@ -110,10 +110,35 @@ const initRoutesEvents = (app) => {
 								break;
 							}
 						}
-
 					}
 				});
 			}
 		).send();
+	});
+
+	app.router.addEvent("genres", router => {
+		let selectedGenres = document.location.hash.split("sg:")[1];
+		setTimeout(() => {
+			makeSelectedGenresActivated();
+		}, 30);
+
+		const renderContainer = document.querySelector("#genres .render-container");
+		if(selectedGenres) {
+			stdXHR(
+				"GET", 
+				"//api.anilibria.tv/api/v2/searchTitles?search=&genres=" + selectedGenres + "&limit=30",
+				xhr => {
+					const resp = JSON.parse(xhr.response);
+					renderContainer.innerHTML = "";
+					document.querySelector("#genres .preload-spinner").classList.add("dnone");
+					for(let i = 0; i < resp.length; i++) {
+						renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
+					}
+				}
+			).send();
+		} else {
+			renderContainer.innerHTML = "";
+			document.querySelector("#genres .preload-spinner").classList.add("dnone");
+		}
 	});
 }

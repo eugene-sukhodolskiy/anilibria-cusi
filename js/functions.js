@@ -84,3 +84,27 @@ const hideMobNav = () => {
 		item.classList.remove("show");
 	});
 }
+
+const getGenres = (callback) => {
+	stdXHR(
+		"GET", 
+		"//api.anilibria.tv/api/v2/getGenres?sorting_type=1",
+		xhr => {
+			const resp = JSON.parse(xhr.response);
+			callback(resp);
+		}
+	).send();
+}
+
+const makeSelectedGenresActivated = () => {
+	let selectedGenres = document.location.hash.split("sg:")[1];
+	selectedGenres = selectedGenres 
+		? selectedGenres.split(",").map(item => { return decodeURI(item); }) 
+		: [];
+	document.querySelectorAll("#genres .render-genres .genre-btn.active").forEach(
+		i => i.classList.remove("active")
+	);
+	for(let i=0; i<selectedGenres.length; i++) {
+		document.querySelector(`#genres .render-genres .genre-btn[data-genre-name="${selectedGenres[i]}"]`)?.classList.add("active");
+	}
+}

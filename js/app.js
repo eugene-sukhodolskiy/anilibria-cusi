@@ -16,6 +16,10 @@ const app = function() {
 
 	initPreloadSpinner(this);
 	initBaseEvents(this);
+
+	getGenres(items => {
+		document.querySelector("#genres .render-genres").appendChild(this.renderer.renderGenresList(items).node);
+	});
 }
 
 document.addEventListener("DOMContentLoaded", e => {

@@ -42,7 +42,6 @@ class Router {
 	urlMonitor() {
 		setInterval(() => {
 			const route = document.location.hash.split("page:")[1];
-			//route?.split(";")[0] != this.currentPage
 			if(document.location.hash != this.currentPath) {
 				this.goToPage(route?.split(";")[0]);
 			}

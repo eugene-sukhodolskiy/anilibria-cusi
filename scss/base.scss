@@ -435,3 +435,14 @@ hr {
 		text-align: center;
 	}
 }
+
+.genre-btn {
+	margin-right: $std-mg-xsm;
+	margin-top: $std-mg-xsm;
+	padding: 3px 5px;
+
+	&.active {
+		background-color: $color-primary;
+		color: $color-text-inverted;
+	}
+}

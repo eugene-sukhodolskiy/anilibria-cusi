@@ -93,7 +93,7 @@ class Renderer {
 	}
 
 	renderSingle(item) {
-		let genres = item.genres.join(", ");
+		let genres = this.renderGenresList(item.genres).html;
 		const thumb = this.renderThumbnail(item);
 		const torrents = this.renderTorrents(item);
 
@@ -212,5 +212,67 @@ class Renderer {
 		return `<div class="loadingio-spinner-dual-ball-9pyhqeozhs"><div class="ldio-jyt13pqa73">
 			<div></div><div></div><div></div>
 			</div></div>`;
+	}
+
+	renderGenreBtn(genre) {
+		let html = `<a 
+			href="#page:genres;sg:${genre}" 
+			class="std-btn genre-btn" 
+			data-genre-name="${genre}"
+		>
+			${genre}
+		</a>`;
+
+		return {
+			html: html,
+			node: this.setEventsOnGenreBtn(html)
+		};
+	}
+
+	setEventsOnGenreBtn(btn) {
+		const container = document.createElement("DIV");
+		container.innerHTML = btn;
+		const item = container.querySelector(".genre-btn");
+
+		item.addEventListener("click", e => {
+			e.preventDefault();
+			const genre = e.currentTarget.getAttribute("data-genre-name");
+			let selectedGenres = document.location.hash.split("sg:")[1];
+			selectedGenres = selectedGenres 
+				? selectedGenres.split(",").map(item => { return decodeURI(item); }) 
+				: [];
+
+			const inx = selectedGenres.indexOf(genre);
+			console.log(selectedGenres, genre, inx);
+			if(inx === -1) {
+				selectedGenres.push(genre);
+				e.currentTarget.classList.add("active");
+			} else {
+				selectedGenres.splice(inx, 1);
+				e.currentTarget.classList.remove("active");
+			}
+
+			document.location.hash = "page:genres;sg:" + selectedGenres.join(",");
+		});
+
+		return item;
+	}
+
+	renderGenresList(genres) {
+		let container = document.createElement("DIV");
+		container.classList.add("genres-wrap");
+		let html = `<div class="genres-wrap">`;
+		for(let i=0; i<genres.length; i++) {
+			const btn = this.renderGenreBtn(genres[i]);
+			container.appendChild(btn.node);
+			html += btn.html;
+		}
+
+		html += "</div>";
+
+		return {
+			html: html,
+			node: container
+		};
 	}
 }
