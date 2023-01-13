@@ -61,9 +61,10 @@ const getFavouritesList = callback => {
 		return document.location.hash = "#page:login";
 	}
 
+	const filters = getItemCardFields().join(",");
 	stdXHR(
 		"GET", 
-		"//api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100",
+		"//api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100&filter="+filters,
 		xhr => {
 			const resp = JSON.parse(xhr.response);
 			callback(resp);
@@ -107,4 +108,8 @@ const makeSelectedGenresActivated = () => {
 	for(let i=0; i<selectedGenres.length; i++) {
 		document.querySelector(`#genres .render-genres .genre-btn[data-genre-name="${selectedGenres[i]}"]`)?.classList.add("active");
 	}
+}
+
+const getItemCardFields = () => {
+	return [ "id", "code", "names", "genres", "posters", "status", "player", "season", "type" ];
 }

@@ -13,9 +13,10 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("home", (router) => {
+		const filters = getItemCardFields().join(",");
 		stdXHR(
 			"GET", 
-			"//api.anilibria.tv/api/v2/getUpdates?limit=40",
+			"//api.anilibria.tv/api/v2/getUpdates?limit=40&filter="+filters,
 			xhr => {
 				const resp = JSON.parse(xhr.response);
 				const renderContainer = document.querySelector("#home .render-container");
@@ -36,17 +37,20 @@ const initRoutesEvents = (app) => {
 			"//api.anilibria.tv/api/v2/getTitle?id="+id,
 			xhr => {
 				const resp = JSON.parse(xhr.response);
+				const genres = resp.genres.join(",");
 				const renderContainer = document.querySelector("#single .render-container.main-render");
 				renderContainer.innerHTML = "";
 				document.querySelector("#single .preload-spinner").classList.add("dnone");
 				renderContainer.appendChild(app.renderer.renderSingle(resp).node);
 
 				let squery = resp.names.ru;
+				const filters = getItemCardFields().join(",");
 				stdXHR(
 					"GET", 
-					"//api.anilibria.tv/api/v2/searchTitles?search="+squery+"&limit=30",
+					"//api.anilibria.tv/api/v2/searchTitles?search="+squery+"&limit=12&filter="+filters,
 					xhr => {
 						const resp = JSON.parse(xhr.response);
+						const ids = resp.map(i => i.id);
 						const renderContainer = document.querySelector("#single .render-container.relevant-items-render");
 						renderContainer.innerHTML = "";
 						for(let i = 0; i < resp.length; i++) {
@@ -55,6 +59,28 @@ const initRoutesEvents = (app) => {
 							}
 
 							renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
+						}
+
+						const freePlaces = 12 - renderContainer.querySelectorAll(".item-card").length;
+						if(freePlaces > 0) {
+							const limit = 12 * 2;
+							stdXHR(
+								"GET", 
+								`//api.anilibria.tv/api/v2/searchTitles?search=&genres=${genres}&limit=${limit}&filter=${filters}`,
+								xhr => {
+									const resp2 = JSON.parse(xhr.response);
+									for(let i = 0; i < resp2.length; i++) {
+										if(renderContainer.querySelectorAll(".item-card").length >= 12) {
+											return false;
+										}
+
+										if(ids.indexOf(resp2[i].id) > -1) {
+											continue;
+										}
+										renderContainer.appendChild(app.renderer.renderItemCard(resp2[i]).node);
+									}
+								}
+							).send();
 						}
 					}
 				).send();
@@ -76,10 +102,11 @@ const initRoutesEvents = (app) => {
 	app.router.addEvent("search", (router) => {
 		let squery = document.location.hash.split("sq:")[1];
 		document.querySelector(`[name="search"]`).value = decodeURI(squery);
+		const filters = getItemCardFields().join(",");
 
 		stdXHR(
 			"GET", 
-			"//api.anilibria.tv/api/v2/searchTitles?search="+squery+"&limit=30",
+			"//api.anilibria.tv/api/v2/searchTitles?search="+squery+"&limit=30&filter="+filters,
 			xhr => {
 				const resp = JSON.parse(xhr.response);
 				const renderContainer = document.querySelector("#search .render-container");
@@ -93,9 +120,11 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("new-series", (router) => {
+		const filters = getItemCardFields().join(",");
+
 		stdXHR(
 			"GET", 
-			"//api.anilibria.tv/api/v2/getUpdates?limit=60",
+			"//api.anilibria.tv/api/v2/getUpdates?limit=60&filter="+filters,
 			xhr => {
 				const resp = JSON.parse(xhr.response);
 				const renderContainer = document.querySelector("#new-series .render-container");
@@ -123,10 +152,11 @@ const initRoutesEvents = (app) => {
 		}, 30);
 
 		const renderContainer = document.querySelector("#genres .render-container");
+		const filters = getItemCardFields().join(",");
 		if(selectedGenres) {
 			stdXHR(
 				"GET", 
-				"//api.anilibria.tv/api/v2/searchTitles?search=&genres=" + selectedGenres + "&limit=30",
+				`//api.anilibria.tv/api/v2/searchTitles?search=&genres=${selectedGenres}&limit=30&filter=${filters}`,
 				xhr => {
 					const resp = JSON.parse(xhr.response);
 					renderContainer.innerHTML = "";
