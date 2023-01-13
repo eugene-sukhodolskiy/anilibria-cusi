@@ -25,6 +25,22 @@ const initBaseEvents = app => {
 			e.currentTarget.blur();
 		}
 	});
+
+	const lmap = { home: homePageUpToLoad, search: searchPageUpToLoad, genres: genresPageUpToLoad };
+	for(let p in lmap) {
+		document.querySelector(`#${p} .more-btn`).addEventListener("click", e => {
+			const from = document.querySelectorAll(`#${p} .render-container .item-card`).length;
+			document.querySelector(`#${p} .more-btn-wrap .preload-spinner`).classList.remove("dnone");
+			document.querySelector(`#${p} .more-btn`).classList.add("dnone");
+
+			lmap[p](app, from, (renderContainer, resp) => {
+				document.querySelector(`#${p} .more-btn-wrap .preload-spinner`).classList.add("dnone");
+				if(resp.length) {
+					document.querySelector(`#${p} .more-btn`).classList.remove("dnone");
+				}
+			});
+		});
+	}
 }
 
 const getSessionId = () => {
@@ -44,7 +60,7 @@ const stdXHR = (method, url, onloadCallback) => {
 		if(xhr.status == 200) {
 			onloadCallback(xhr);
 		} else {
-			const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+			const alert = createGlobalAlertComponent("danger", "Ошибка загрузки данных");
 		}
 	}
 

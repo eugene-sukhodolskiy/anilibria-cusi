@@ -1,3 +1,11 @@
+const _CONF = {
+	perPage: {
+		home: 20,
+		search: 20,
+		genres: 20
+	}
+};
+
 const app = function() {
 	this.router = new Router(".page-container", "home", "not-found");
 	this.auth = new Auth("#login .login-form form");

@@ -9,6 +9,7 @@
 
 	<script src="./libs/player.js"></script>
 	<script src="./js/functions.js"></script>
+	<script src="./js/loaders.js"></script>
 	<script src="./js/routes-events.js"></script>
 	<script src="./js/Alert.js"></script>
 	<script src="./js/Router.js"></script>
@@ -153,10 +154,14 @@
 			</div>
 
 			<div class="page home" id="home">
-				<div class="card">
+				<div class="card card-transparent">
 					<h2>Последнее добавленое</h2>
 					<div class="preload-spinner"></div>
 					<div class="render-container grid"></div>
+					<div class="more-btn-wrap">
+						<div class="preload-spinner dnone"></div>
+						<button class="std-btn btn-primary more-btn">Загрузить ещё</button>
+					</div>
 				</div>
 			</div>
 
@@ -175,6 +180,10 @@
 					<h2>Поиск</h2>
 					<div class="preload-spinner"></div>
 					<div class="render-container grid"></div>
+					<div class="more-btn-wrap">
+						<div class="preload-spinner dnone"></div>
+						<button class="std-btn btn-primary more-btn">Загрузить ещё</button>
+					</div>
 				</div>
 			</div>
 
@@ -192,6 +201,10 @@
 					<div class="render-genres"></div>
 					<div class="preload-spinner"></div>
 					<div class="render-container grid"></div>
+					<div class="more-btn-wrap">
+						<div class="preload-spinner dnone"></div>
+						<button class="std-btn btn-primary more-btn">Загрузить ещё</button>
+					</div>
 				</div>
 			</div>
 		</div>

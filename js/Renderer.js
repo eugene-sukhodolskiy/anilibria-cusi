@@ -243,7 +243,6 @@ class Renderer {
 				: [];
 
 			const inx = selectedGenres.indexOf(genre);
-			console.log(selectedGenres, genre, inx);
 			if(inx === -1) {
 				selectedGenres.push(genre);
 				e.currentTarget.classList.add("active");

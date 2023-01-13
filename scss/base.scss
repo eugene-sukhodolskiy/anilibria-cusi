@@ -446,3 +446,10 @@ hr {
 		color: $color-text-inverted;
 	}
 }
+
+.more-btn-wrap {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin: $std-mg-lg 0;
+}

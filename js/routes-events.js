@@ -3,6 +3,7 @@ const initRoutesEvents = (app) => {
 		document.querySelectorAll("#single .render-container").forEach(i => { i.innerHTML = ""; });
 		document.querySelector(`#${pageId} .preload-spinner`)?.classList.remove("dnone");
 		document.querySelector(`[name="search"]`).value = "";
+		document.querySelectorAll(".page .more-btn").forEach(i => i.classList.add("dnone"));
 		hideMobNav();
 	});
 
@@ -13,20 +14,11 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("home", (router) => {
-		const filters = getItemCardFields().join(",");
-		stdXHR(
-			"GET", 
-			"//api.anilibria.tv/api/v2/getUpdates?limit=40&filter="+filters,
-			xhr => {
-				const resp = JSON.parse(xhr.response);
-				const renderContainer = document.querySelector("#home .render-container");
-				renderContainer.innerHTML = "";
-				document.querySelector("#home .preload-spinner").classList.add("dnone");
-				for(let i = 0; i < resp.length; i++) {
-					renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
-				}
-			}
-		).send();
+		homePageUpToLoad(app, 0, (renderContainer, resp) => {
+			renderContainer.innerHTML = "";
+			document.querySelector("#home .preload-spinner").classList.add("dnone");
+			resp.length && document.querySelector("#home .more-btn").classList.remove("dnone");
+		});
 	});
 
 	app.router.addEvent("single", (router) => {			
@@ -102,21 +94,12 @@ const initRoutesEvents = (app) => {
 	app.router.addEvent("search", (router) => {
 		let squery = document.location.hash.split("sq:")[1];
 		document.querySelector(`[name="search"]`).value = decodeURI(squery);
-		const filters = getItemCardFields().join(",");
 
-		stdXHR(
-			"GET", 
-			"//api.anilibria.tv/api/v2/searchTitles?search="+squery+"&limit=30&filter="+filters,
-			xhr => {
-				const resp = JSON.parse(xhr.response);
-				const renderContainer = document.querySelector("#search .render-container");
-				renderContainer.innerHTML = "";
-				document.querySelector("#search .preload-spinner").classList.add("dnone");
-				for(let i = 0; i < resp.length; i++) {
-					renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
-				}
-			}
-		).send();
+		searchPageUpToLoad(app, 0, (renderContainer, resp) => {
+			renderContainer.innerHTML = "";
+			document.querySelector("#search .preload-spinner").classList.add("dnone");
+			resp.length && document.querySelector("#search .more-btn").classList.remove("dnone");
+		});
 	});
 
 	app.router.addEvent("new-series", (router) => {
@@ -154,18 +137,11 @@ const initRoutesEvents = (app) => {
 		const renderContainer = document.querySelector("#genres .render-container");
 		const filters = getItemCardFields().join(",");
 		if(selectedGenres) {
-			stdXHR(
-				"GET", 
-				`//api.anilibria.tv/api/v2/searchTitles?search=&genres=${selectedGenres}&limit=30&filter=${filters}`,
-				xhr => {
-					const resp = JSON.parse(xhr.response);
-					renderContainer.innerHTML = "";
-					document.querySelector("#genres .preload-spinner").classList.add("dnone");
-					for(let i = 0; i < resp.length; i++) {
-						renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
-					}
-				}
-			).send();
+			genresPageUpToLoad(app, 0, (renderContainer, resp) => {
+				renderContainer.innerHTML = "";
+				document.querySelector("#genres .preload-spinner").classList.add("dnone");
+				resp.length && document.querySelector("#genres .more-btn").classList.remove("dnone");
+			});
 		} else {
 			renderContainer.innerHTML = "";
 			document.querySelector("#genres .preload-spinner").classList.add("dnone");
