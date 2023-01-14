@@ -2,6 +2,7 @@ class Renderer {
 	constructor() {}
 
 	renderThumbnail(item) {
+		const status = item.status.string ? item.status.string : "Завершен";
 		return `
 			<div class="component thumbnail">
 				<img src="https://anilibria.tv/${item.posters.medium.url}" class="thumbnail-img">
@@ -9,7 +10,7 @@ class Renderer {
 				<div class="hover-effect">
 					<span class="mdi mdi-arrow-right"></span>
 				</div>
-				<div class="status">${item.status.string}</div>
+				<div class="status">${status}</div>
 				<div class="series">Серий ${item.player.series.last}</div>
 			</div>
 		`;
@@ -102,7 +103,7 @@ class Renderer {
 				${thumb}
 				<div class="item-info">
 					<h2 class="title"><strong>${item.names.ru}</strong> / ${item.names.en}</h2>
-					<div class="time-period">${item.season.string} ${item.season.year}</div>
+					<div class="time-period">${item.season.string || ""} ${item.season.year}</div>
 					<div class="genres">${genres}</div>
 					<div class="type">${item.type.full_string}</div>
 					<div class="description">${item.description}</div>
@@ -154,7 +155,7 @@ class Renderer {
 			if(data.player.playlist[i].hls.fhd) {
 				files += `,[1080p]//${data.player.host}${data.player.playlist[i].hls.fhd}`;
 			}
-			
+
 			playerData.file.push({
 				id: "s"+i,
 				skip: data.player.playlist[i].skips.opening.length ? data.player.playlist[i].skips.opening.join("-") : null,
