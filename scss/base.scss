@@ -13,12 +13,10 @@
   background: #333; 
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #555; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #666; 
 }
@@ -432,19 +430,22 @@ hr {
 
 .render-container.grid {
 	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: $std-mg-md;
 	margin-top: $std-mg-lg;
 
 	@include media("max", "xl") {
+  	grid-template-columns: 1fr 1fr 1fr;
 		justify-content: space-evenly;	
 	}
 
+	@include media("max", "lg") {
+  	grid-template-columns: 1fr 1fr;
+	}
+
 	@include media("max", "sm") {
-		.item-card {
-			max-width: 350px;
-		}
+  	grid-template-columns: 1fr;
 	}
 }
 
@@ -469,5 +470,5 @@ hr {
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	margin: $std-mg-lg 0;
+	margin: $std-mg-xl 0;
 }
