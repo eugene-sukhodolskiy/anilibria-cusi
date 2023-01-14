@@ -143,17 +143,18 @@ class Renderer {
 			file: []
 		};
 
-		let files = `[480p]//${data.player.host}${data.player.playlist[i].hls.sd}`;
-		
-		if(data.player.playlist[i].hls.hd) {
-			files += `,[720p]//${data.player.host}${data.player.playlist[i].hls.hd}`;
-		}
-
-		if(data.player.playlist[i].hls.fhd) {
-			files += `,[1080p]//${data.player.host}${data.player.playlist[i].hls.fhd}`;
-		}
 
 		for(let i in data.player.playlist) {
+			let files = `[480p]//${data.player.host}${data.player.playlist[i].hls.sd}`;
+
+			if(data.player.playlist[i].hls.hd) {
+				files += `,[720p]//${data.player.host}${data.player.playlist[i].hls.hd}`;
+			}
+
+			if(data.player.playlist[i].hls.fhd) {
+				files += `,[1080p]//${data.player.host}${data.player.playlist[i].hls.fhd}`;
+			}
+			
 			playerData.file.push({
 				id: "s"+i,
 				skip: data.player.playlist[i].skips.opening.length ? data.player.playlist[i].skips.opening.join("-") : null,
