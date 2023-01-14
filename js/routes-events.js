@@ -33,6 +33,7 @@ const initRoutesEvents = (app) => {
 			xhr => {
 				const resp = JSON.parse(xhr.response);
 				setPageTitle(resp.names.ru);
+				prepareImgForBG("//anilibria.tv" + resp.posters.medium.url);
 				const genres = resp.genres.join(",");
 				const renderContainer = document.querySelector("#single .render-container.main-render");
 				renderContainer.innerHTML = "";
