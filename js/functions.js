@@ -138,22 +138,3 @@ const getItemCardFields = () => {
 const setPageTitle = pageTitle => {
 	document.querySelector("head title").innerHTML = pageTitle;
 }
-
-const prepareImgForBG = url => {
-	const canvas = document.createElement("CANVAS");
-	canvas.crossOrigin = "anonymous";
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	const ctx = canvas.getContext('2d');
-	const img = new Image();
-	img.crossOrigin = "anonymous";
-	img.onload = e => {
-		ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-		ctx.filter = 'blur(50px) brightness(0.3) opacity(50%)';
-
-		const imgData = canvas.toDataURL("image/jpeg", 0.5);
-		console.log(imgData);
-	}
-
-	img.src = url;
-}
