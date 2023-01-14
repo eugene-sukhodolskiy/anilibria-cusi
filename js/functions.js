@@ -134,3 +134,7 @@ const makeSelectedGenresActivated = () => {
 const getItemCardFields = () => {
 	return [ "id", "code", "names", "genres", "posters", "status", "player", "season", "type" ];
 }
+
+const setPageTitle = pageTitle => {
+	document.querySelector("head title").innerHTML = pageTitle;
+}

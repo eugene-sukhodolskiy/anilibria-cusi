@@ -5,6 +5,9 @@ const initRoutesEvents = (app) => {
 		document.querySelector(`[name="search"]`).value = "";
 		document.querySelectorAll(".page .more-btn").forEach(i => i.classList.add("dnone"));
 		hideMobNav();
+
+		const pageTitle = document.querySelector(`#${pageId}`)?.getAttribute("data-title");
+		setPageTitle(pageTitle);
 	});
 
 	app.router.addEvent("login", (router) => {
@@ -29,6 +32,7 @@ const initRoutesEvents = (app) => {
 			"//api.anilibria.tv/api/v2/getTitle?id="+id,
 			xhr => {
 				const resp = JSON.parse(xhr.response);
+				setPageTitle(resp.names.ru);
 				const genres = resp.genres.join(",");
 				const renderContainer = document.querySelector("#single .render-container.main-render");
 				renderContainer.innerHTML = "";
