@@ -18,8 +18,12 @@ class Router {
 	}
 
 	goToPage(pageId) {
-		if(typeof pageId == "undefined" || typeof this.pages[pageId] == "undefined") {
+		if(typeof pageId == "undefined") {
 			return document.location.hash = `page:${this.defaultPageId}`;
+		}
+
+		if(typeof this.pages[pageId] == "undefined") {
+			return this.goToPage(this.notFoundPageId);
 		}
 
 		this.container.querySelectorAll(".page.show").forEach( p => {

@@ -60,12 +60,17 @@ const stdXHR = (method, url, onloadCallback) => {
 		if(xhr.status == 200) {
 			onloadCallback(xhr);
 		} else {
+			if(xhr.status == 404) {
+				app().router.goToPage("not-found");
+			}
 			const alert = createGlobalAlertComponent("danger", "Ошибка загрузки данных");
+			setTimeout(() => alert.close(), 3000);
 		}
 	}
 
 	xhr.onerror = () => {
 		const alert = createGlobalAlertComponent("danger", "Сервер не доступен");
+		setTimeout(() => alert.close(), 3000);
 	}
 
 	return xhr;

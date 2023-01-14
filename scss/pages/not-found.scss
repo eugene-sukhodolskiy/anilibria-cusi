@@ -1,0 +1,15 @@
+.page.not-found {
+	.card {
+		text-align: center;
+		margin-top: 200px;
+
+		h1 {
+			font-size: 2.5em;
+			margin-bottom: $std-mg-md;
+		}
+
+		h2 {
+			font-weight: normal;
+		}
+	}
+}
