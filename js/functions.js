@@ -74,7 +74,7 @@ const stdXHR = (method, url, onloadCallback) => {
 const getFavouritesList = callback => {
 	const sessId = getSessionId();
 	if(!sessId) {
-		return document.location.hash = "#page:login";
+		return setTimeout(() => document.location.hash = "#page:login", 20);
 	}
 
 	const filters = getItemCardFields().join(",");
