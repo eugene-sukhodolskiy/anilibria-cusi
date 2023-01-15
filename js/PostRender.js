@@ -2,14 +2,7 @@ class PostRender {
 	constructor() {}
 
 	itemCard(html) {
-		const container = document.createElement("DIV");
-		container.innerHTML = html;
-		const item = container.querySelector(".card");
-
-		item.addEventListener("click", e => {
-			const id = e.currentTarget.getAttribute("data-id");
-			document.location.hash = `page:single;id${id}`;
-		});
+		const item = nodeFromHTML(html);
 
 		item.querySelector(".thumbnail-img").addEventListener("load", e => {
 			e.currentTarget.parentNode.parentNode.classList.add("load-ready");
@@ -18,33 +11,31 @@ class PostRender {
 		return item;
 	}
 
-	single(html, data) {
-		const container = document.createElement("DIV");
-		container.innerHTML = html;
-		const item = container.querySelector(".single-item");
+	single(html, post) {
+		const item = nodeFromHTML(html);
 
 		const playerData = {
-			id: "main-player-"+data.id,
+			id: "main-player-" + post.id,
 			default_quality: "720p",
 			preroll_deny: "",
 			file: []
 		};
 
 
-		for(let i in data.player.playlist) {
-			let files = `[480p]//${data.player.host}${data.player.playlist[i].hls.sd}`;
+		for(let i in post.player.playlist) {
+			let files = `[480p]https://${post.player.host}${post.player.playlist[i].hls.sd}`;
 
-			if(data.player.playlist[i].hls.hd) {
-				files += `,[720p]//${data.player.host}${data.player.playlist[i].hls.hd}`;
+			if(post.player.playlist[i].hls.hd) {
+				files += `,[720p]https://${post.player.host}${post.player.playlist[i].hls.hd}`;
 			}
 
-			if(data.player.playlist[i].hls.fhd) {
-				files += `,[1080p]//${data.player.host}${data.player.playlist[i].hls.fhd}`;
+			if(post.player.playlist[i].hls.fhd) {
+				files += `,[1080p]https://${post.player.host}${post.player.playlist[i].hls.fhd}`;
 			}
 
 			playerData.file.push({
 				id: "s"+i,
-				skip: data.player.playlist[i].skips.opening.length ? data.player.playlist[i].skips.opening.join("-") : null,
+				skip: post.player.playlist[i].skips.opening.length ? post.player.playlist[i].skips.opening.join("-") : null,
 				title: `Серия ${i}`,
 				poster: null,
 				download: null,
@@ -56,48 +47,7 @@ class PostRender {
 			let player = new Playerjs(playerData);
 		}, 30);
 
-		const sessId = getSessionId();
-		if(sessId) {
-			item.querySelector(".fav-btn .state.unset-from").classList.add("dnone");
-			item.querySelector(".fav-btn .state.set-to").classList.remove("dnone");
-
-			getFavouritesList(resp => {
-				for(let i=0; i<resp.length; i++) {
-					if(data.id == resp[i].id) {
-						item.querySelector(".fav-btn .state.unset-from").classList.remove("dnone");
-						item.querySelector(".fav-btn .state.set-to").classList.add("dnone");
-						break;
-					}
-				}
-				
-				item.querySelector(".fav-btn").classList.remove("dnone");
-			});
-			
-			// Add Listener for fav btn
-			item.querySelector(".fav-btn").addEventListener("click", e => {
-				if(e.currentTarget.querySelector(".unset-from").classList.contains("dnone")) {
-					// ADD TO FAVOURITES
-					stdXHR(
-						"PUT", 
-						"//api.anilibria.tv/api/v2/addFavorite?session="+sessId+"&title_id="+data.id,
-						xhr => {
-							item.querySelector(".fav-btn .state.unset-from").classList.remove("dnone");
-							item.querySelector(".fav-btn .state.set-to").classList.add("dnone");
-						}
-					).send();
-				} else {
-					// REMOVE FROM FAVOURITES
-					stdXHR(
-						"DELETE", 
-						"//api.anilibria.tv/api/v2/delFavorite?session="+sessId+"&title_id="+data.id,
-						xhr => {
-							item.querySelector(".fav-btn .state.unset-from").classList.add("dnone");
-							item.querySelector(".fav-btn .state.set-to").classList.remove("dnone");
-						}
-					).send();
-				}
-			});
-		}
+		item.querySelector(".fav-btn-wrap").appendChild(app().renderer.renderFavoriteBtn(post).node);
 
 		item.querySelector(".thumbnail-img").addEventListener("load", e => {
 			e.currentTarget.parentNode.classList.add("load-ready");
@@ -106,10 +56,46 @@ class PostRender {
 		return item;
 	}
 
+	favoriteBtn(html, postId) {
+		const item = nodeFromHTML(html);
+
+		const sessId = getSessionId();
+		if(sessId) {
+			item.querySelector(".state.unset-from").classList.add("dnone");
+			item.querySelector(".state.set-to").classList.remove("dnone");
+
+			app().loader.favouritesList(resp => {
+				for(let i=0; i<resp.length; i++) {
+					if(postId == resp[i].id) {
+						item.querySelector(".state.unset-from").classList.remove("dnone");
+						item.querySelector(".state.set-to").classList.add("dnone");
+						break;
+					}
+				}
+				
+				item.classList.remove("dnone");
+			});
+			
+			item.addEventListener("click", e => {
+				if(e.currentTarget.querySelector(".unset-from").classList.contains("dnone")) {
+					addToFavourites(postId, resp => {
+						item.querySelector(".state.unset-from").classList.remove("dnone");
+						item.querySelector(".state.set-to").classList.add("dnone");
+					});
+				} else {
+					removeFromFavourites(postId, resp => {
+						item.querySelector(".state.unset-from").classList.add("dnone");
+						item.querySelector(".state.set-to").classList.remove("dnone");
+					});
+				}
+			});
+		}
+
+		return item;
+	}
+
 	genreBtn(html) {
-		const container = document.createElement("DIV");
-		container.innerHTML = html;
-		const item = container.querySelector(".genre-btn");
+		const item = nodeFromHTML(html);
 
 		item.addEventListener("click", e => {
 			e.preventDefault();

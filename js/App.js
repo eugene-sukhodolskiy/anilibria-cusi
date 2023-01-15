@@ -1,17 +1,10 @@
-const _CONF = {
-	perPage: {
-		home: 20,
-		search: 20,
-		genres: 20
-	}
-};
-
 class App {
 	constructor() {
 		this.router = new Router(".page-container", "home", "not-found");
 		this.auth = new Auth("#login .login-form form");
+		this.renderer = new Renderer();
 		this.postRender = new PostRender();
-		this.renderer = new Renderer(this.postRender);
+		this.loader = new Loader();
 
 		initRoutesEvents(this);
 		this.router.urlMonitor();
@@ -50,25 +43,32 @@ class App {
 			}
 		});
 
-		const lmap = { home: homePageUpToLoad, search: searchPageUpToLoad, genres: genresPageUpToLoad };
+		const lmap = { 
+			home: this.loader.homePageUpToLoad, 
+			search: this.loader.searchPageUpToLoad, 
+			genres: this.loader.genresPageUpToLoad 
+		};
 		for(let p in lmap) {
-			document.querySelector(`#${p} .more-btn`).addEventListener("click", e => {
-				const from = document.querySelectorAll(`#${p} .render-container .item-card`).length;
-				document.querySelector(`#${p} .more-btn-wrap .preload-spinner`).classList.remove("dnone");
-				document.querySelector(`#${p} .more-btn`).classList.add("dnone");
+			const page = document.querySelector(`#${p}`);
+			page.querySelector(`.more-btn`).addEventListener("click", e => {
+				const renderContainer = page.querySelector(".render-container");
+				const from = renderContainer.childNodes.length;
+				page.querySelector(`.more-btn-wrap .preload-spinner`).classList.remove("dnone");
+				page.querySelector(`.more-btn`).classList.add("dnone");
 
-				lmap[p](this, from, (renderContainer, resp) => {
-					document.querySelector(`#${p} .more-btn-wrap .preload-spinner`).classList.add("dnone");
+				lmap[p](from, resp => {
+					page.querySelector(`.more-btn-wrap .preload-spinner`).classList.add("dnone");
 					if(resp.length) {
-						document.querySelector(`#${p} .more-btn`).classList.remove("dnone");
+						page.querySelector(`.more-btn`).classList.remove("dnone");
 					}
+					insertListToRenderContainer(renderContainer, resp);
 				});
 			});
 		}
 	}
 
 	initGenres() {
-		getGenres(items => {
+		this.loader.genresList(items => {
 			document.querySelector("#genres .render-genres").appendChild(this.renderer.renderGenresList(items).node);
 		});
 	}

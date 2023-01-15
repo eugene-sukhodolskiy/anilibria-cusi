@@ -17,21 +17,24 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("home", (router) => {
-		homePageUpToLoad(app, 0, (renderContainer, resp) => {
+		app.loader.homePageUpToLoad(0, (resp) => {
+			const renderContainer = document.querySelector("#home .render-container");
 			renderContainer.innerHTML = "";
 			document.querySelector("#home .preload-spinner").classList.add("dnone");
 			resp.length && document.querySelector("#home .more-btn").classList.remove("dnone");
+			insertListToRenderContainer(renderContainer, resp);
 		});
 	});
 
 	app.router.addEvent("single", (router) => {			
 		const id = document.location.hash.split("id")[1];
 
-		stdXHR(
-			"GET", 
-			"//api.anilibria.tv/api/v2/getTitle?id="+id,
-			xhr => {
-				const resp = JSON.parse(xhr.response);
+		anilibriaRequest(
+			"getTitle", 
+			{
+				id: id
+			}, 
+			resp => {
 				setPageTitle(resp.names.ru);
 				const genres = resp.genres.join(",");
 				const renderContainer = document.querySelector("#single .render-container.main-render");
@@ -41,32 +44,36 @@ const initRoutesEvents = (app) => {
 
 				let squery = resp.names.ru;
 				const filters = getItemCardFields().join(",");
-				stdXHR(
-					"GET", 
-					"//api.anilibria.tv/api/v2/searchTitles?search="+squery+"&limit=12&filter="+filters,
-					xhr => {
-						const resp = JSON.parse(xhr.response);
+
+				anilibriaRequest(
+					"searchTitles", 
+					{
+						search: resp.names.ru,
+						after: 0,
+						limit: _CONF.numbOfRelevant,
+						filter: getItemCardFields(),
+					},
+					resp => {
+						resp.splice(_CONF.numbOfRelevant, resp.length);
 						const ids = resp.map(i => i.id);
 						const renderContainer = document.querySelector("#single .render-container.relevant-items-render");
 						renderContainer.innerHTML = "";
-						for(let i = 0; i < resp.length; i++) {
-							if(resp[i].id == id) {
-								continue;
-							}
+						insertListToRenderContainer(renderContainer, resp.filter(i => i.id != id));
 
-							renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
-						}
-
-						const freePlaces = 12 - renderContainer.querySelectorAll(".item-card").length;
-						if(freePlaces > 0) {
-							const limit = 12 * 2;
-							stdXHR(
-								"GET", 
-								`//api.anilibria.tv/api/v2/searchTitles?search=&genres=${genres}&limit=${limit}&filter=${filters}`,
-								xhr => {
-									const resp2 = JSON.parse(xhr.response);
+						if(_CONF.numbOfRelevant - renderContainer.childNodes.length > 0) {
+							anilibriaRequest(
+								"searchTitles", 
+								{
+									search: "",
+									genres: genres,
+									after: 0,
+									limit: _CONF.numbOfRelevant * 2,
+									filter: getItemCardFields(),
+								}, 
+								resp2 => {
+									resp2 = resp2.filter(i => i.id != id);
 									for(let i = 0; i < resp2.length; i++) {
-										if(renderContainer.querySelectorAll(".item-card").length >= 12) {
+										if(renderContainer.childNodes.length >= _CONF.numbOfRelevant) {
 											return false;
 										}
 
@@ -76,16 +83,16 @@ const initRoutesEvents = (app) => {
 										renderContainer.appendChild(app.renderer.renderItemCard(resp2[i]).node);
 									}
 								}
-							).send();
+							);
 						}
 					}
-				).send();
+				);
 			}
-		).send();
+		);
 	});
 
-	app.router.addEvent("favourites", (router) => {
-		getFavouritesList(resp => {
+	app.router.addEvent("favourites", router => {
+		app.loader.favouritesList(resp => {
 			const renderContainer = document.querySelector("#favourites .render-container");
 			document.querySelector("#favourites .preload-spinner").classList.add("dnone");
 			renderContainer.innerHTML = "";
@@ -95,30 +102,33 @@ const initRoutesEvents = (app) => {
 		});
 	});
 
-	app.router.addEvent("search", (router) => {
+	app.router.addEvent("search", router => {
 		let squery = document.location.hash.split("sq:")[1];
 		document.querySelector(`[name="search"]`).value = decodeURI(squery);
 
-		searchPageUpToLoad(app, 0, (renderContainer, resp) => {
+		app.loader.searchPageUpToLoad(0, resp => {
+			const renderContainer = document.querySelector("#search .render-container");
 			renderContainer.innerHTML = "";
 			document.querySelector("#search .preload-spinner").classList.add("dnone");
 			resp.length && document.querySelector("#search .more-btn").classList.remove("dnone");
+			insertListToRenderContainer(renderContainer, resp);
 		});
 	});
 
-	app.router.addEvent("new-series", (router) => {
-		const filters = getItemCardFields().join(",");
-
-		stdXHR(
-			"GET", 
-			"//api.anilibria.tv/api/v2/getUpdates?limit=60&filter="+filters,
-			xhr => {
-				const resp = JSON.parse(xhr.response);
+	app.router.addEvent("new-series", router => {
+		anilibriaRequest(
+			"getUpdates", 
+			{
+				after: 0,
+				limit: 60,
+				filter: getItemCardFields(),
+			},
+			resp => {
 				const renderContainer = document.querySelector("#new-series .render-container");
 				renderContainer.innerHTML = "";
 				document.querySelector("#new-series .preload-spinner").classList.add("dnone");
 
-				getFavouritesList(favs => {
+				app.loader.favouritesList(favs => {
 					for(let i = 0; i < resp.length; i++) {
 						for(let j = 0; j < favs.length; j++) {
 							if(favs[j].id == resp[i].id) {
@@ -129,7 +139,7 @@ const initRoutesEvents = (app) => {
 					}
 				});
 			}
-		).send();
+		);
 	});
 
 	app.router.addEvent("genres", router => {
@@ -139,12 +149,13 @@ const initRoutesEvents = (app) => {
 		}, 30);
 
 		const renderContainer = document.querySelector("#genres .render-container");
-		const filters = getItemCardFields().join(",");
 		if(selectedGenres) {
-			genresPageUpToLoad(app, 0, (renderContainer, resp) => {
+			app.loader.genresPageUpToLoad(0, resp => {
+				const renderContainer = document.querySelector("#genres .render-container");
 				renderContainer.innerHTML = "";
 				document.querySelector("#genres .preload-spinner").classList.add("dnone");
 				resp.length && document.querySelector("#genres .more-btn").classList.remove("dnone");
+				insertListToRenderContainer(renderContainer, resp);
 			});
 		} else {
 			renderContainer.innerHTML = "";

@@ -31,23 +31,6 @@ const stdXHR = (method, url, onloadCallback) => {
 	return xhr;
 }
 
-const getFavouritesList = callback => {
-	const sessId = getSessionId();
-	if(!sessId) {
-		return setTimeout(() => document.location.hash = "#page:login", 20);
-	}
-
-	const filters = getItemCardFields().join(",");
-	stdXHR(
-		"GET", 
-		"//api.anilibria.tv/api/v2/getFavorites?session="+sessId+"&limit=100&filter="+filters,
-		xhr => {
-			const resp = JSON.parse(xhr.response);
-			callback(resp);
-		}
-	).send();
-}
-
 const showMobNav = () => {
 	document.querySelector(".btn-nav-on-mob-show").classList.add("active");
 	document.querySelectorAll(".navigation-main-wrapper, .userbar-wrapper").forEach(item => {
@@ -60,17 +43,6 @@ const hideMobNav = () => {
 	document.querySelectorAll(".navigation-main-wrapper, .userbar-wrapper").forEach(item => {
 		item.classList.remove("show");
 	});
-}
-
-const getGenres = (callback) => {
-	stdXHR(
-		"GET", 
-		"//api.anilibria.tv/api/v2/getGenres?sorting_type=1",
-		xhr => {
-			const resp = JSON.parse(xhr.response);
-			callback(resp);
-		}
-	).send();
 }
 
 const makeSelectedGenresActivated = () => {
@@ -92,4 +64,78 @@ const getItemCardFields = () => {
 
 const setPageTitle = pageTitle => {
 	document.querySelector("head title").innerHTML = pageTitle;
+}
+
+const nodeFromHTML = html => {
+	const container = document.createElement("DIV");
+	container.innerHTML = html;
+	return item = container.childNodes[0];
+}
+
+const addToFavourites = (postId, callback) => {
+	const sessId = getSessionId();
+	if(sessId) {
+		anilibriaRequest(
+			"addFavorite",
+			{
+				session: sessId,
+				title_id: postId
+			},
+			resp => callback(resp)
+		);
+	}
+}
+
+const removeFromFavourites = (postId, callback) => {
+	const sessId = getSessionId();
+	if(sessId) {
+		anilibriaRequest(
+			"delFavorite",
+			{
+				session: sessId,
+				title_id: postId
+			},
+			resp => callback(resp)
+		);
+	}
+}
+
+const insertListToRenderContainer = (renderContainer, list) => {
+	for(let i = 0; i < list.length; i++) {
+		renderContainer.appendChild(app().renderer.renderItemCard(list[i]).node);
+	}
+}
+
+const anilibriaRequest = (name, params, callback) => {
+	const methodMap = {
+		delFavorite: "DELETE",
+		addFavorite: "PUT",
+		_default: "GET"
+	};
+	params = params || {};
+
+	const method = methodMap[name] || methodMap._default;
+	let url = `//${_CONF.api.domen}/api/${_CONF.api.ver}/${name}`;
+	
+	if(params["filter"]) {	
+	 	params.filter = params.filter.join(",");
+	}
+
+	const query = (new URLSearchParams(params)).toString();
+	if(query) {
+		url += `?${query}`;
+	}
+
+	stdXHR(method, url,
+		xhr => {
+			const resp = JSON.parse(xhr.response);
+			callback(resp);
+		}
+	).send();
+}
+
+const getSelectedGenres = () => {
+	let genres = document.location.hash.split("sg:")[1];
+	genres = decodeURI(genres);
+	return genres.length ? genres.split(",") : [];
 }
