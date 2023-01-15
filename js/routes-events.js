@@ -67,7 +67,7 @@ const initRoutesEvents = (app) => {
 									search: "",
 									genres: genres,
 									after: 0,
-									limit: _CONF.numbOfRelevant * 2,
+									limit: _CONF.numbOfRelevant + 1,
 									filter: getItemCardFields(),
 								}, 
 								resp2 => {
@@ -103,8 +103,8 @@ const initRoutesEvents = (app) => {
 	});
 
 	app.router.addEvent("search", router => {
-		let squery = document.location.hash.split("sq:")[1];
-		document.querySelector(`[name="search"]`).value = decodeURI(squery);
+		let squery = decodeURI(document.location.hash.split("sq:")[1]);
+		document.querySelector(`[name="search"]`).value = squery;
 
 		app.loader.searchPageUpToLoad(0, resp => {
 			const renderContainer = document.querySelector("#search .render-container");

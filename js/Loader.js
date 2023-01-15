@@ -14,7 +14,7 @@ class Loader {
 	}
 
 	searchPageUpToLoad(from, callback) {
-		let squery = document.location.hash.split("sq:")[1];
+		let squery = decodeURI(document.location.hash.split("sq:")[1]);
 
 		anilibriaRequest(
 			"searchTitles", 
