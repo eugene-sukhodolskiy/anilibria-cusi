@@ -62,5 +62,6 @@ class Auth {
 		document.location.hash = "#page:login";
 		document.querySelector(".logout-btn").classList.add("dnone");
 		document.querySelector(".go-login-page-btn").classList.remove("dnone");
+		app().cacheProvider.unsetCache("favouritesList");
 	}
 }

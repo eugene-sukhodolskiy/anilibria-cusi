@@ -21,8 +21,8 @@ const initRoutesEvents = (app) => {
 			const renderContainer = document.querySelector("#home .render-container");
 			renderContainer.innerHTML = "";
 			document.querySelector("#home .preload-spinner").classList.add("dnone");
-			resp.length && document.querySelector("#home .more-btn").classList.remove("dnone");
-			insertListToRenderContainer(renderContainer, resp);
+			resp.list.length && document.querySelector("#home .more-btn").classList.remove("dnone");
+			insertListToRenderContainer(renderContainer, resp.list);
 		});
 	});
 
@@ -30,7 +30,7 @@ const initRoutesEvents = (app) => {
 		const id = document.location.hash.split("id")[1];
 
 		anilibriaRequest(
-			"getTitle", 
+			"title", 
 			{
 				id: id
 			}, 
@@ -46,7 +46,7 @@ const initRoutesEvents = (app) => {
 				const filters = getItemCardFields().join(",");
 
 				anilibriaRequest(
-					"searchTitles", 
+					"title/search", 
 					{
 						search: resp.names.ru,
 						after: 0,
@@ -54,15 +54,15 @@ const initRoutesEvents = (app) => {
 						filter: getItemCardFields(),
 					},
 					resp => {
-						resp.splice(_CONF.numbOfRelevant, resp.length);
-						const ids = resp.map(i => i.id);
+						resp.list.splice(_CONF.numbOfRelevant, resp.list.length);
+						const ids = resp.list.map(i => i.id);
 						const renderContainer = document.querySelector("#single .render-container.relevant-items-render");
 						renderContainer.innerHTML = "";
-						insertListToRenderContainer(renderContainer, resp.filter(i => i.id != id));
+						insertListToRenderContainer(renderContainer, resp.list.filter(i => i.id != id));
 
 						if(_CONF.numbOfRelevant - renderContainer.childNodes.length > 0) {
 							anilibriaRequest(
-								"searchTitles", 
+								"title/search", 
 								{
 									search: "",
 									genres: genres,
@@ -71,16 +71,16 @@ const initRoutesEvents = (app) => {
 									filter: getItemCardFields(),
 								}, 
 								resp2 => {
-									resp2 = resp2.filter(i => i.id != id);
-									for(let i = 0; i < resp2.length; i++) {
+									resp2.list = resp2.list.filter(i => i.id != id);
+									for(let i = 0; i < resp2.list.length; i++) {
 										if(renderContainer.childNodes.length >= _CONF.numbOfRelevant) {
 											return false;
 										}
 
-										if(ids.indexOf(resp2[i].id) > -1) {
+										if(ids.indexOf(resp2.list[i].id) > -1) {
 											continue;
 										}
-										renderContainer.appendChild(app.renderer.renderItemCard(resp2[i]).node);
+										renderContainer.appendChild(app.renderer.renderItemCard(resp2.list[i]).node);
 									}
 								}
 							);
@@ -97,6 +97,7 @@ const initRoutesEvents = (app) => {
 			document.querySelector("#favourites .preload-spinner").classList.add("dnone");
 			renderContainer.innerHTML = "";
 			for(let i = resp.length-1; i >= 0 ; i--) {
+				resp[i].player.episodes = resp[i].player.series;
 				renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
 			}
 		});
@@ -110,14 +111,14 @@ const initRoutesEvents = (app) => {
 			const renderContainer = document.querySelector("#search .render-container");
 			renderContainer.innerHTML = "";
 			document.querySelector("#search .preload-spinner").classList.add("dnone");
-			resp.length && document.querySelector("#search .more-btn").classList.remove("dnone");
-			insertListToRenderContainer(renderContainer, resp);
+			resp.list.length && document.querySelector("#search .more-btn").classList.remove("dnone");
+			insertListToRenderContainer(renderContainer, resp.list);
 		});
 	});
 
 	app.router.addEvent("new-series", router => {
 		anilibriaRequest(
-			"getUpdates", 
+			"title/updates", 
 			{
 				after: 0,
 				limit: 60,
@@ -129,10 +130,10 @@ const initRoutesEvents = (app) => {
 				document.querySelector("#new-series .preload-spinner").classList.add("dnone");
 
 				app.loader.favouritesList(favs => {
-					for(let i = 0; i < resp.length; i++) {
+					for(let i = 0; i < resp.list.length; i++) {
 						for(let j = 0; j < favs.length; j++) {
-							if(favs[j].id == resp[i].id) {
-								renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
+							if(favs[j].id == resp.list[i].id) {
+								renderContainer.appendChild(app.renderer.renderItemCard(resp.list[i]).node);
 								break;
 							}
 						}
@@ -154,8 +155,8 @@ const initRoutesEvents = (app) => {
 				const renderContainer = document.querySelector("#genres .render-container");
 				renderContainer.innerHTML = "";
 				document.querySelector("#genres .preload-spinner").classList.add("dnone");
-				resp.length && document.querySelector("#genres .more-btn").classList.remove("dnone");
-				insertListToRenderContainer(renderContainer, resp);
+				resp.list.length && document.querySelector("#genres .more-btn").classList.remove("dnone");
+				insertListToRenderContainer(renderContainer, resp.list);
 			});
 		} else {
 			renderContainer.innerHTML = "";

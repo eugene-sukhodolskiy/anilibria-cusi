@@ -3,7 +3,7 @@ class Loader {
 
 	homePageUpToLoad(from, callback) {
 		anilibriaRequest(
-			"getUpdates", 
+			"title/updates", 
 			{
 				after: from,
 				limit: _CONF.perPage.home,
@@ -17,7 +17,7 @@ class Loader {
 		let squery = decodeURI(document.location.hash.split("sq:")[1]);
 
 		anilibriaRequest(
-			"searchTitles", 
+			"title/search", 
 			{
 				after: from,
 				limit: _CONF.perPage.search,
@@ -32,7 +32,7 @@ class Loader {
 		const selectedGenres = getSelectedGenres();
 
 		anilibriaRequest(
-			"searchTitles", 
+			"title/search", 
 			{
 				search: "",
 				filter: getItemCardFields(),
@@ -54,7 +54,7 @@ class Loader {
 			"favouritesList", 
 			cacheableCallback => {
 				anilibriaRequest(
-					"getFavorites", 
+					"v2.13:getFavorites", 
 					{
 						session: sessId,
 						limit: 100,
@@ -73,7 +73,7 @@ class Loader {
 			"genresList",
 			cacheableCallback => {
 				anilibriaRequest(
-					"getGenres", 
+					"genres", 
 					{
 						sorting_type: 1
 					}, 

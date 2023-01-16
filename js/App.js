@@ -65,10 +65,10 @@ class App {
 
 				lmap[p](from, resp => {
 					page.querySelector(`.more-btn-wrap .preload-spinner`).classList.add("dnone");
-					if(resp.length) {
+					if(resp.list.length) {
 						page.querySelector(`.more-btn`).classList.remove("dnone");
 					}
-					insertListToRenderContainer(renderContainer, resp);
+					insertListToRenderContainer(renderContainer, resp.list);
 				});
 			});
 		}

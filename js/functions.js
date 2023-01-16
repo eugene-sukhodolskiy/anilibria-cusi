@@ -10,7 +10,8 @@ const getSessionId = () => {
 const stdXHR = (method, url, onloadCallback) => {
 	const xhr = new XMLHttpRequest();
 	xhr.open(method, url);
-	
+	xhr.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
+
 	xhr.onload = () => {
 		if(xhr.status == 200) {
 			onloadCallback(xhr);
@@ -76,7 +77,7 @@ const addToFavourites = (postId, callback) => {
 	const sessId = getSessionId();
 	if(sessId) {
 		anilibriaRequest(
-			"addFavorite",
+			"user/favorites",
 			{
 				session: sessId,
 				title_id: postId
@@ -84,7 +85,8 @@ const addToFavourites = (postId, callback) => {
 			resp => { 
 				app().cacheProvider.unsetCache("favouritesList");
 				callback(resp);
-			}
+			},
+			"PUT"
 		);
 	}
 }
@@ -93,7 +95,7 @@ const removeFromFavourites = (postId, callback) => {
 	const sessId = getSessionId();
 	if(sessId) {
 		anilibriaRequest(
-			"delFavorite",
+			"user/favorites",
 			{
 				session: sessId,
 				title_id: postId
@@ -101,7 +103,8 @@ const removeFromFavourites = (postId, callback) => {
 			resp => {
 				app().cacheProvider.unsetCache("favouritesList");
 				callback(resp);
-			}
+			},
+			"DELETE"
 		);
 	}
 }
@@ -112,19 +115,23 @@ const insertListToRenderContainer = (renderContainer, list) => {
 	}
 }
 
-const anilibriaRequest = (name, params, callback) => {
-	const methodMap = {
-		delFavorite: "DELETE",
-		addFavorite: "PUT",
-		_default: "GET"
-	};
+const anilibriaRequest = (name, params, callback, method) => {
 	params = params || {};
 
-	const method = methodMap[name] || methodMap._default;
-	let url = `//${_CONF.api.domen}/api/${_CONF.api.ver}/${name}`;
+	method = method || "GET";
+	let ver = _CONF.api.ver;
+	if(name.indexOf(":") != -1) {
+		[ver, name] = name.split(":");
+	}
+
+	let url = `//${_CONF.api.domen}/api/${ver}/${name}`;
 	
 	if(params["filter"]) {	
 	 	params.filter = params.filter.join(",");
+	}
+
+	if(params["after"] === 0) {
+		delete params["after"];
 	}
 
 	const query = (new URLSearchParams(params)).toString();

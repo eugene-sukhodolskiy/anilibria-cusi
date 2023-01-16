@@ -22,20 +22,20 @@ class PostRender {
 		};
 
 
-		for(let i in post.player.playlist) {
-			let files = `[480p]https://${post.player.host}${post.player.playlist[i].hls.sd}`;
+		for(let i in post.player.list) {
+			let files = `[480p]https://${post.player.host}${post.player.list[i].hls.sd}`;
 
-			if(post.player.playlist[i].hls.hd) {
-				files += `,[720p]https://${post.player.host}${post.player.playlist[i].hls.hd}`;
+			if(post.player.list[i].hls.hd) {
+				files += `,[720p]https://${post.player.host}${post.player.list[i].hls.hd}`;
 			}
 
-			if(post.player.playlist[i].hls.fhd) {
-				files += `,[1080p]https://${post.player.host}${post.player.playlist[i].hls.fhd}`;
+			if(post.player.list[i].hls.fhd) {
+				files += `,[1080p]https://${post.player.host}${post.player.list[i].hls.fhd}`;
 			}
 
 			playerData.file.push({
-				id: "s"+i,
-				skip: post.player.playlist[i].skips.opening.length ? post.player.playlist[i].skips.opening.join("-") : null,
+				id: "s" + i,
+				skip: post.player.list[i].skips.opening.length ? post.player.list[i].skips.opening.join("-") : null,
 				title: `Серия ${i}`,
 				poster: null,
 				download: null,

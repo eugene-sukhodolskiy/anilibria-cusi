@@ -3,6 +3,7 @@ class Renderer {
 
 	renderThumbnail(post) {
 		const status = post.status.string ? post.status.string : "Завершен";
+
 		return `
 			<div class="component thumbnail">
 				<img src="//anilibria.tv${post.posters.medium.url}" class="thumbnail-img">
@@ -14,7 +15,7 @@ class Renderer {
 					<span class="mdi mdi-arrow-right"></span>
 				</div>
 				<div class="status">${status}</div>
-				<div class="series">Серий ${post.player.series.last}</div>
+				<div class="series">Серий ${post.player.episodes.last}</div>
 			</div>
 		`;
 	}
@@ -53,7 +54,7 @@ class Renderer {
 				: size.toString().split(".")[0] + "." +  size.toString().split(".")[1].substr(0,2) + " МБ";
 			html += `
 				<div class="torrent" data-torrent-id="${torrent.torrent_id}">
-					<div class="series">Серии ${torrent.series.string}</div>
+					<div class="series">Серии ${torrent.episodes.string}</div>
 					<div class="quality">${torrent.quality.string}</div>
 					
 					<div class="seed-leech">

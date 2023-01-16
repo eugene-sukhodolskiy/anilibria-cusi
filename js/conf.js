@@ -1,7 +1,7 @@
 const _CONF = {
 	api: {
 		domen: "api.anilibria.tv",
-		ver: "v2.13"
+		ver: "v3"
 	},
 
 	perPage: {
