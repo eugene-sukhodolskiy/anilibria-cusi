@@ -60,7 +60,17 @@ const makeSelectedGenresActivated = () => {
 }
 
 const getItemCardFields = () => {
-	return [ "id", "code", "names", "genres", "posters", "status", "player", "season", "type" ];
+	return [ 
+		"id", 
+		"code", 
+		"names", 
+		"genres", 
+		"posters.medium.url", 
+		"status", 
+		"player.episodes", 
+		"season", 
+		"type" 
+	];
 }
 
 const setPageTitle = pageTitle => {
