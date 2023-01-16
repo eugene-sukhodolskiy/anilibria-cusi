@@ -1,5 +1,5 @@
 class Loader {
-	constructor(){}
+	constructor() {}
 
 	homePageUpToLoad(from, callback) {
 		anilibriaRequest(
@@ -50,24 +50,38 @@ class Loader {
 			return setTimeout(() => document.location.hash = "#page:login", 20);
 		}
 
-		anilibriaRequest(
-			"getFavorites", 
-			{
-				session: sessId,
-				limit: 100,
-				filter: getItemCardFields(),
+		app().cacheProvider.cacheable(
+			"favouritesList", 
+			cacheableCallback => {
+				anilibriaRequest(
+					"getFavorites", 
+					{
+						session: sessId,
+						limit: 100,
+						filter: getItemCardFields(),
+					}, 
+					resp => cacheableCallback(resp)
+				);
 			}, 
-			resp => callback(resp)
+			callback,
+			60 * 5
 		);
 	}
 
 	genresList(callback) {
-		anilibriaRequest(
-			"getGenres", 
-			{
-				sorting_type: 1
-			}, 
-			resp => callback(resp)
+		app().cacheProvider.cacheable(
+			"genresList",
+			cacheableCallback => {
+				anilibriaRequest(
+					"getGenres", 
+					{
+						sorting_type: 1
+					}, 
+					resp => cacheableCallback(resp)
+				);
+			},
+			callback,
+			60 * 60 * 3
 		);
 	}
 }

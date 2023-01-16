@@ -81,7 +81,10 @@ const addToFavourites = (postId, callback) => {
 				session: sessId,
 				title_id: postId
 			},
-			resp => callback(resp)
+			resp => { 
+				app().cacheProvider.unsetCache("favouritesList");
+				callback(resp);
+			}
 		);
 	}
 }
@@ -95,7 +98,10 @@ const removeFromFavourites = (postId, callback) => {
 				session: sessId,
 				title_id: postId
 			},
-			resp => callback(resp)
+			resp => {
+				app().cacheProvider.unsetCache("favouritesList");
+				callback(resp);
+			}
 		);
 	}
 }

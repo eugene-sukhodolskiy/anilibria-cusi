@@ -5,7 +5,14 @@ class App {
 		this.renderer = new Renderer();
 		this.postRender = new PostRender();
 		this.loader = new Loader();
+		this.cacheProvider = new CacheProvider();
 
+		setTimeout(() => {
+			this.init();
+		}, 10);
+	}
+
+	init() {
 		initRoutesEvents(this);
 		this.router.urlMonitor();
 
