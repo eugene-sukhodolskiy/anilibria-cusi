@@ -59,18 +59,30 @@ const makeSelectedGenresActivated = () => {
 	}
 }
 
-const getItemCardFields = () => {
-	return [ 
-		"id", 
-		"code", 
-		"names", 
-		"genres", 
-		"posters.medium.url", 
-		"status", 
-		"player.episodes", 
-		"season", 
-		"type" 
-	];
+const getItemCardFields = (api2Flag) => {
+	return (api2Flag === true) 
+	? [ 
+			"id", 
+			"code", 
+			"names", 
+			"genres", 
+			"posters", 
+			"status", 
+			"player", 
+			"season", 
+			"type" 
+		]
+	: [ 
+			"id", 
+			"code", 
+			"names", 
+			"genres", 
+			"posters.medium.url", 
+			"status", 
+			"player.episodes", 
+			"season", 
+			"type" 
+		]
 }
 
 const setPageTitle = pageTitle => {

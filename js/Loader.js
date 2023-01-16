@@ -58,7 +58,7 @@ class Loader {
 					{
 						session: sessId,
 						limit: 100,
-						filter: getItemCardFields(),
+						filter: getItemCardFields(true),
 					}, 
 					resp => cacheableCallback(resp)
 				);
