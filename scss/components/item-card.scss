@@ -7,6 +7,10 @@
 	transition-duration: $trans-du;
 	transition-property: border-color;
 
+	@include media("max", "sm") {
+		padding: $std-pd-xsm;
+	}
+
 	&.load-ready .thumbnail-img {
 		opacity: 1;
 	}

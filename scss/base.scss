@@ -34,6 +34,7 @@ body {
 .page {
 	margin-top: 50px;
 	padding-top: $std-pd-xl;
+	padding-bottom: $std-pd-xl;
 }
 
 .container {
@@ -440,11 +441,15 @@ hr {
 		justify-content: space-evenly;	
 	}
 
-	@include media("max", "lg") {
+	@include media("max", "md") {
   	grid-template-columns: 1fr 1fr;
-	}
+	} 
 
 	@include media("max", "sm") {
+		gap: $std-mg-sm;
+	}
+
+	@include media("max", "xs") {
   	grid-template-columns: 1fr;
 	}
 }
