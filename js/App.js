@@ -20,6 +20,7 @@ class App {
 		this.initPreloadSpinner();
 		this.initBaseEvents();
 		this.initGenres();
+		this.initGoToTopBtn();
 	}
 
 	initPreloadSpinner() {
@@ -88,6 +89,45 @@ class App {
 			document.querySelector(".logout-btn").classList.add("dnone");
 			document.querySelector(".go-login-page-btn").classList.remove("dnone");
 		}
+	}
+
+	initGoToTopBtn() {
+		const goTopBtn = document.querySelector(".go-to-top");
+
+		const goTopBtnVisibilityHandler = () => {
+			if(window.pageYOffset > 500) {
+				if(!goTopBtn.classList.contains("show")) {
+					goTopBtn.classList.add("show");
+				}
+			} else {
+				if(goTopBtn.classList.contains("show")) {
+					goTopBtn.classList.remove("show");
+				}
+			}
+		}
+
+		goTopBtnVisibilityHandler();
+
+		window.addEventListener("scroll", e => {
+			goTopBtnVisibilityHandler();
+		});
+
+		goTopBtn.addEventListener("click", e => {
+			const duration = 50;
+			const step = Math.round(window.pageYOffset / duration);
+
+			const animationInterval = setInterval(() => {
+				const newPageYOffset = Math.max(0, window.pageYOffset - step);
+
+				window.scrollTo({
+					top: newPageYOffset 
+				});
+
+				if(!newPageYOffset) {
+					return clearInterval(animationInterval);
+				}
+			}, 1);
+		});
 	}
 }
 
