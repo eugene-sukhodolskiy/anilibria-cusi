@@ -25,7 +25,7 @@
 		}
 	}
 
-	.series, .status {
+	.thumb-label {
 		position: absolute;
 		bottom: 3px;
 		padding: 2px $std-pd-xsm;
@@ -41,6 +41,13 @@
 
 	.status {
 		left: 3px;
+	}
+
+	.watched {
+		top: 3px;
+		bottom: auto;
+		right: 3px;
+		background-color: $color-success;
 	}
 
 	.hover-effect {

@@ -3,6 +3,9 @@ class Renderer {
 
 	renderThumbnail(post) {
 		const status = post.status.string ? post.status.string : "Завершен";
+		const watched = (post.localPlayerData && post.localPlayerData.currentEpisode == post.player.episodes.last)
+			? `<div class="thumb-label watched">Просмотрено</div>`
+			: ""
 
 		return `
 			<div class="component thumbnail">
@@ -14,8 +17,9 @@ class Renderer {
 				<div class="hover-effect">
 					<span class="mdi mdi-arrow-right"></span>
 				</div>
-				<div class="status">${status}</div>
-				<div class="series">Серий ${post.player.episodes.last}</div>
+				${watched}
+				<div class="thumb-label status">${status}</div>
+				<div class="thumb-label series">Серий ${post.player.episodes.last}</div>
 			</div>
 		`;
 	}

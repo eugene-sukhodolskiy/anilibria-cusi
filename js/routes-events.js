@@ -32,7 +32,8 @@ const initRoutesEvents = (app) => {
 		anilibriaRequest(
 			"title", 
 			{
-				id: id
+				id: id,
+				include: "raw_poster"
 			}, 
 			resp => {
 				setPageTitle(resp.names.ru);
@@ -130,9 +131,15 @@ const initRoutesEvents = (app) => {
 				document.querySelector("#new-series .preload-spinner").classList.add("dnone");
 
 				app.loader.favouritesList(favs => {
+					const playerData = getStorablePlayerData();
+
 					for(let i = 0; i < resp.list.length; i++) {
 						for(let j = 0; j < favs.length; j++) {
 							if(favs[j].id == resp.list[i].id) {
+								if(playerData[resp.list[i].id]) {
+									resp.list[i].localPlayerData = playerData[resp.list[i].id];
+								}
+
 								renderContainer.appendChild(app.renderer.renderItemCard(resp.list[i]).node);
 								break;
 							}

@@ -76,8 +76,8 @@
 		.logo-wrapper {
 			.logo {
 				.logo-link {
-					color: $color-text;
-					font-size: $fsize-xl;
+					color: $color-text-lite;
+					font-size: $fsize-lg;
 					border-bottom: 0;
 					display: flex;
 					flex-direction: row;
@@ -136,7 +136,7 @@
 
 		.userbar-wrapper {
 			@include media("max", "lg") {
-				top: 280px;
+				bottom: 0;
 			}
 		}
 	}

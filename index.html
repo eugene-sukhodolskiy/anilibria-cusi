@@ -5,11 +5,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Anilibria Custom Interface</title>
 	<link rel="stylesheet" href="./libs/materialdesign-icons/css/materialdesignicons.min.css">
-	<link rel="stylesheet" href="./css/style.min.css?t2248">
+	<link rel="stylesheet" href="./css/style.min.css?t1940">
 	<link rel="icon" href="./imgs/logo.webp">
 
 	<script src="./libs/player.js"></script>
-	<script src="./js/dist/all.min.js?t1951"></script>
+	<script src="./js/dist/all.min.js?t1940"></script>
 </head>
 <body>
 	<div class="dnone">
@@ -60,13 +60,13 @@
 								<a href="#page:home" class="nav-link">Главная</a>
 							</li>
 							<li class="nav-list-item">
+								<a href="#page:genres" class="nav-link">Жанры</a>
+							</li>
+							<li class="nav-list-item">
 								<a 
 									href="#page:favourites" 
 									class="nav-link"
 								>Избранное</a>
-							</li>
-							<li class="nav-list-item">
-								<a href="#page:genres" class="nav-link">Жанры</a>
 							</li>
 							<li class="nav-list-item">
 								<a 
@@ -135,8 +135,10 @@
 
 			<div class="page favourites" id="favourites" data-title="Избранное">
 				<div class="card">
-					<h2>Избранное</h2>
-					<div class="preload-spinner"></div>
+					<div class="page-head">
+						<h2 class="page-title">Избранное</h2>
+						<div class="preload-spinner"></div>
+					</div>
 					<div class="render-container grid"></div>
 				</div>
 			</div>
@@ -150,8 +152,10 @@
 
 			<div class="page home" id="home" data-title="Последнее добавленое">
 				<div class="card card-transparent">
-					<h2>Последнее добавленое</h2>
-					<div class="preload-spinner"></div>
+					<div class="page-head">
+						<h2 class="page-title">Последнее добавленое</h2>
+						<div class="preload-spinner"></div>
+					</div>
 					<div class="render-container grid"></div>
 					<div class="more-btn-wrap">
 						<div class="preload-spinner dnone"></div>
@@ -172,8 +176,10 @@
 
 			<div class="page search" id="search" data-title="Поиск">
 				<div class="card card-transparent">
-					<h2>Поиск</h2>
-					<div class="preload-spinner"></div>
+					<div class="page-head">
+						<h2 class="page-title">Поиск</h2>
+						<div class="preload-spinner"></div>
+					</div>
 					<div class="render-container grid"></div>
 					<div class="more-btn-wrap">
 						<div class="preload-spinner dnone"></div>
@@ -184,17 +190,21 @@
 
 			<div class="page new-series" id="new-series" data-title="Новые серии">
 				<div class="card card-transparent">
-					<h2>Новые серии</h2>
-					<div class="preload-spinner"></div>
+					<div class="page-head">
+						<h2 class="page-title">Новые серии</h2>
+						<div class="preload-spinner"></div>
+					</div>
 					<div class="render-container grid"></div>
 				</div>
 			</div>
 
 			<div class="page genres" id="genres" data-title="Поиск по жанрам">
 				<div class="card card-transparent">
-					<h2>По жанрам</h2>
+					<div class="page-head">
+						<h2 class="page-title">По жанрам</h2>
+						<div class="preload-spinner"></div>
+					</div>
 					<div class="render-genres"></div>
-					<div class="preload-spinner"></div>
 					<div class="render-container grid"></div>
 					<div class="more-btn-wrap">
 						<div class="preload-spinner dnone"></div>

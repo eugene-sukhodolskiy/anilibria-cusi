@@ -149,7 +149,7 @@ const anilibriaRequest = (name, params, callback, method) => {
 	let url = `//${_CONF.api.domen}/api/${ver}/${name}`;
 	
 	if(params["filter"]) {	
-	 	params.filter = params.filter.join(",");
+		params.filter = params.filter.join(",");
 	}
 
 	if(params["after"] === 0) {
@@ -173,4 +173,28 @@ const getSelectedGenres = () => {
 	let genres = document.location.hash.split("sg:")[1];
 	genres = decodeURI(genres);
 	return genres.length ? genres.split(",") : [];
+}
+
+const getStorablePlayerData = () => {
+	const data = {};
+	const keys = Object.keys(localStorage);
+
+	for(let key of keys) {
+		if(key.indexOf("pljsplayfrom_main-player-") == -1) {
+			continue;
+		}
+
+		const id = parseInt(key.split("pljsplayfrom_main-player-")[1]);
+		let val = localStorage.getItem(key);
+		[watched, len, watchedAt] = val.split("}")[1].split("--");
+		data[id] = {
+			currentEpisode: val.split("}")[0].split("s")[1],
+			timing: {
+				watched: Math.floor(watched),
+				len: Math.floor(len)
+			}
+		};
+	}
+
+	return data;
 }
