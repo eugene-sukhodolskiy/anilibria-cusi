@@ -13,7 +13,7 @@ class App {
 	}
 
 	init() {
-		initRoutesEvents(this);
+		initers(this);
 		this.router.urlMonitor();
 
 		this.initDisplayingAuthBtns();

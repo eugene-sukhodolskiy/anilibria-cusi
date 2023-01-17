@@ -4,7 +4,7 @@ class Router {
 		this.container = document.querySelector(this.containerSelector);
 		this.defaultPageId = defaultPageId;
 		this.notFoundPageId = notFoundPageId;
-		this.events = {};
+		this.initers = {};
 		const findedPages = this.container.querySelectorAll(".page[id]");
 
 		this.pages = {};
@@ -31,8 +31,8 @@ class Router {
 		} );
 
 		if(typeof this.pages[pageId] != "undefined") {
-			this.events["jumpTo"] && this.events["jumpTo"](this, pageId);
-			this.events[pageId] && this.events[pageId](this);
+			this.initers["_page"] && this.initers["_page"](this, pageId);
+			this.initers[pageId] && this.initers[pageId](this);
 			this.pages[pageId].style.zIndex = this.zindex;
 			this.zindex++;
 		}
@@ -52,7 +52,7 @@ class Router {
 		}, 10);
 	}
 
-	addEvent(name, callback) {
-		this.events[name] = callback;
+	initPage(pageName, callback) {
+		this.initers[pageName] = callback;
 	}
 }
