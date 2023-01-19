@@ -108,6 +108,7 @@ class Renderer {
 		let genres = this.renderGenresList(post.genres).html;
 		const thumb = this.renderThumbnail(post);
 		const torrents = this.renderTorrents(post);
+		const voices = post.team.voice.join(", ");
 
 		let html = `<div class="component single-item">
 			<div class="std-row">
@@ -117,6 +118,12 @@ class Renderer {
 					<div class="time-period">${post.season.string || ""} ${post.season.year}</div>
 					<div class="genres">${genres}</div>
 					<div class="type">${post.type.full_string}</div>
+					<div class="team">
+						<div class="voice">
+							<strong>Голоса:</strong>
+							${voices}
+						</div>
+					</div>
 					<div class="description">${post.description}</div>
 					<div class="control-panel">
 						<div class="fav-btn-wrap"></div>
