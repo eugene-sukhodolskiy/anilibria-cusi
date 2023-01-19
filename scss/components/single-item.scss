@@ -61,23 +61,29 @@
 		}
 	}
 
+	.tabs {
+		margin-top: $std-mg-md;
+
+		.tabs-content {
+			height: 660px;
+			
+			@include media("max", "lg") {
+				height: 520px;
+			}
+
+			@include media("max", "md") {
+				height: 410px;
+			}
+
+			@include media("max", "sm") {
+				height: 300px;
+			}
+		}
+	}
+
 	.player {
 		width: 100%;
-		height: 660px;
-		margin-top: $std-mg-md;
-		border-radius: $border-rad-lg;
+		height: 100%;
 		overflow: hidden;
-		
-		@include media("max", "lg") {
-			height: 520px;
-		}
-
-		@include media("max", "md") {
-			height: 410px;
-		}
-
-		@include media("max", "sm") {
-			height: 300px;
-		}
 	}
 }

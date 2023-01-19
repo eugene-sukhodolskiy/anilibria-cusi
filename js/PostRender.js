@@ -13,6 +13,22 @@ class PostRender {
 
 	single(html, post) {
 		const item = nodeFromHTML(html);
+		const tabs = this.tabs(app().renderer.renderTabs({
+			name: "video",
+			tabs: {
+				"player-container": {
+					btn: `<span class="mdi mdi-television-play"></span> Смотреть`,
+					content: `<div class="player" id="main-player-${post.id}"></div>`
+				},
+				"torrents-container": {
+					btn: `<span class="mdi mdi-download"></span> Скачать`,
+					content: app().renderer.renderTorrents(post)
+				}
+			},
+			active: "player-container"
+		}));
+
+		item.querySelector(".video-container").appendChild(tabs);
 
 		const playerData = {
 			id: "main-player-" + post.id,
@@ -20,7 +36,6 @@ class PostRender {
 			preroll_deny: "",
 			file: []
 		};
-
 
 		for(let i in post.player.list) {
 			let files = `[480p]https://${post.player.host}${post.player.list[i].hls.sd}`;
@@ -115,6 +130,23 @@ class PostRender {
 			}
 
 			document.location.hash = "page:genres;sg:" + selectedGenres.join(",");
+		});
+
+		return item;
+	}
+
+	tabs(html) {
+		const item = nodeFromHTML(html);
+
+		item.querySelectorAll(".tabs-nav .tab").forEach(i => {
+			i.addEventListener("click", e => {
+				item.querySelector(".tabs-nav .tab.active").classList.remove("active");
+				item.querySelector(".tabs-content .tab-content.active").classList.remove("active");
+
+				const tabName = e.currentTarget.getAttribute("data-tab");
+				e.currentTarget.classList.add("active");
+				item.querySelector(`.tab-content[data-tab="${tabName}"]`).classList.add("active");
+			});
 		});
 
 		return item;

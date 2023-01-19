@@ -104,10 +104,28 @@ class Renderer {
 		};
 	}
 
+	renderTabs(props) {
+		let nav = `<div class="tabs-nav">`;
+		let content = `<div class="tabs-content">`;
+		for(let tabName in props.tabs) {
+			const active = (props.active == tabName) ? "active" : "";
+			nav += `<div class="tab ${active}" data-tab="${tabName}">${props.tabs[tabName].btn}</div>`;
+			content += `<div class="tab-content ${tabName} ${active}" data-tab="${tabName}">${props.tabs[tabName].content}</div>`;
+		}
+		nav += `</div>`;
+		content += `</div>`;
+
+		let html = `<div class="component tabs ${props.name}" id="${props.name}">
+			${nav}
+			${content}
+		</div>`;
+		
+		return html;
+	}
+
 	renderSingle(post) {
 		let genres = this.renderGenresList(post.genres).html;
 		const thumb = this.renderThumbnail(post);
-		const torrents = this.renderTorrents(post);
 		const voices = post.team.voice.join(", ");
 
 		let html = `<div class="component single-item">
@@ -128,11 +146,10 @@ class Renderer {
 					<div class="control-panel">
 						<div class="fav-btn-wrap"></div>
 					</div>
-					${torrents}
 				</div>
 			</div>
 
-			<div class="player" id="main-player-${post.id}"></div>
+			<div class="video-container"></div>
 		</div>`;
 
 		return {
