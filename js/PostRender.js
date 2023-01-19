@@ -52,7 +52,7 @@ class PostRender {
 				id: "s" + i,
 				skip: post.player.list[i].skips.opening.length ? post.player.list[i].skips.opening.join("-") : null,
 				title: `Серия ${i}`,
-				poster: null,
+				poster: post.player.list[i].preview ? `//${_CONF.domen}${post.player.list[i].preview}` : null,
 				download: null,
 				file: files
 			});

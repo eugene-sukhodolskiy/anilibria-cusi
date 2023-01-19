@@ -1,4 +1,5 @@
 const _CONF = {
+	domen: "anilibria.tv",
 	api: {
 		domen: "api.anilibria.tv",
 		ver: "v3"
