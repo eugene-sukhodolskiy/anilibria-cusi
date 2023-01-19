@@ -6,6 +6,7 @@ class App {
 		this.postRender = new PostRender();
 		this.loader = new Loader();
 		this.cacheProvider = new CacheProvider();
+		this.storedPlayerDataManager = new StoredPlayerDataManager();
 
 		setTimeout(() => {
 			this.init();

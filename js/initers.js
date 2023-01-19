@@ -132,12 +132,18 @@ const initers = app => {
 	});
 
 	app.router.initPage("new-series", router => {
-		anilibriaRequest(
-			"title/updates", 
-			{
-				after: 0,
-				limit: 60,
-				filter: getItemCardFields(),
+		app.cacheProvider.cacheable(
+			"new-series",
+			cacheableCallback => {
+				anilibriaRequest(
+					"title/updates", 
+					{
+						after: 0,
+						limit: 60,
+						filter: getItemCardFields(),
+					},
+					cacheableCallback
+				);
 			},
 			resp => {
 				const renderContainer = document.querySelector("#new-series .render-container");
@@ -160,8 +166,10 @@ const initers = app => {
 						}
 					}
 				});
-			}
+			},
+			60 * 60 * 5
 		);
+		
 	});
 
 	app.router.initPage("genres", router => {

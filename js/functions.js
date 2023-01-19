@@ -190,8 +190,8 @@ const getStorablePlayerData = () => {
 		data[id] = {
 			currentEpisode: val.split("}")[0].split("s")[1],
 			timing: {
-				watched: Math.floor(watched),
-				len: Math.floor(len),
+				watched: parseInt(watched),
+				len: parseInt(len),
 				watchedAt: watchedAt
 			}
 		};
