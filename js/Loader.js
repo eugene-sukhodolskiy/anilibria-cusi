@@ -1,26 +1,26 @@
 class Loader {
 	constructor() {}
 
-	homePageUpToLoad(from, callback) {
+	homePageUpToLoad(pageNum, callback) {
 		anilibriaRequest(
 			"title/updates", 
 			{
-				after: from,
-				limit: _CONF.perPage.home,
+				page: pageNum,
+				items_per_page: _CONF.perPage.home,
 				filter: getItemCardFields()
 			}, 
 			resp => callback(resp)
 		);
 	}
 
-	searchPageUpToLoad(from, callback) {
+	searchPageUpToLoad(pageNum, callback) {
 		let squery = decodeURI(document.location.hash.split("sq:")[1]);
 
 		anilibriaRequest(
 			"title/search", 
 			{
-				after: from,
-				limit: _CONF.perPage.search,
+				page: pageNum,
+				items_per_page: _CONF.perPage.search,
 				filter: getItemCardFields(),
 				search: squery
 			}, 
@@ -28,7 +28,7 @@ class Loader {
 		);
 	}
 
-	genresPageUpToLoad(from, callback) {
+	genresPageUpToLoad(pageNum, callback) {
 		const selectedGenres = getSelectedGenres();
 
 		anilibriaRequest(
@@ -37,8 +37,8 @@ class Loader {
 				search: "",
 				filter: getItemCardFields(),
 				genres: selectedGenres.join(","),
-				after: from,
-				limit: _CONF.perPage.search,
+				page: pageNum,
+				items_per_page: _CONF.perPage.search,
 			}, 
 			resp => callback(resp)
 		);

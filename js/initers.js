@@ -17,7 +17,7 @@ const initers = app => {
 	});
 
 	app.router.initPage("home", router => {
-		app.loader.homePageUpToLoad(0, (resp) => {
+		app.loader.homePageUpToLoad(1, resp => {
 			const renderContainer = document.querySelector("#home .render-container");
 			renderContainer.innerHTML = "";
 			document.querySelector("#home .preload-spinner").classList.add("dnone");
@@ -131,7 +131,7 @@ const initers = app => {
 		let squery = decodeURI(document.location.hash.split("sq:")[1]);
 		document.querySelector(`[name="search"]`).value = squery;
 
-		app.loader.searchPageUpToLoad(0, resp => {
+		app.loader.searchPageUpToLoad(1, resp => {
 			const renderContainer = document.querySelector("#search .render-container");
 			renderContainer.innerHTML = "";
 			document.querySelector("#search .preload-spinner").classList.add("dnone");
@@ -189,7 +189,7 @@ const initers = app => {
 
 		const renderContainer = document.querySelector("#genres .render-container");
 		if(selectedGenres) {
-			app.loader.genresPageUpToLoad(0, resp => {
+			app.loader.genresPageUpToLoad(1, resp => {
 				const renderContainer = document.querySelector("#genres .render-container");
 				renderContainer.innerHTML = "";
 				document.querySelector("#genres .preload-spinner").classList.add("dnone");

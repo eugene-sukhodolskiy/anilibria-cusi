@@ -61,11 +61,11 @@ class App {
 			const page = document.querySelector(`#${p}`);
 			page.querySelector(`.more-btn`).addEventListener("click", e => {
 				const renderContainer = page.querySelector(".render-container");
-				const from = renderContainer.childNodes.length;
+				const pageNum = Math.ceil(renderContainer.childNodes.length / _CONF.perPage[p]) + 1;
 				page.querySelector(`.more-btn-wrap .preload-spinner`).classList.remove("dnone");
 				page.querySelector(`.more-btn`).classList.add("dnone");
 
-				lmap[p](from, resp => {
+				lmap[p](pageNum, resp => {
 					page.querySelector(`.more-btn-wrap .preload-spinner`).classList.add("dnone");
 					if(resp.list.length) {
 						page.querySelector(`.more-btn`).classList.remove("dnone");
