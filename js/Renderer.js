@@ -2,7 +2,15 @@ class Renderer {
 	constructor() {}
 
 	renderThumbnail(post) {
-		const status = post.status.string ? post.status.string : "Завершен";
+		let status = post.status.string ? post.status.string : "Завершен";
+		if(post.inSchedule) {
+			if(post.inSchedule.isToday) {
+				status = `<span class="mdi mdi-flag-checkered"></span> Сегодня`;
+			} else {
+				status = `<span class="mdi mdi-flag-checkered"></span> ${(post.inSchedule.string.charAt(0).toUpperCase() + post.inSchedule.string.slice(1))}`;
+			}
+		}
+
 		const watched = (post.localPlayerData && post.localPlayerData.currentEpisode == post.player.episodes.last)
 			? `<div class="thumb-label watched">Просмотрено</div>`
 			: ""
@@ -127,6 +135,9 @@ class Renderer {
 		let genres = this.renderGenresList(post.genres).html;
 		const thumb = this.renderThumbnail(post);
 		const voices = post.team.voice.join(", ");
+		const schedule = post.inSchedule 
+			? `<div class=""><span class="mdi mdi-flag-checkered"></span> Новая серия: ${(post.inSchedule.isToday ? "сегодня" : post.inSchedule.string)}</div>` 
+			: "";
 
 		let html = `<div class="component single-item">
 			<div class="std-row">
@@ -136,6 +147,7 @@ class Renderer {
 					<div class="time-period">${post.season.string || ""} ${post.season.year}</div>
 					<div class="genres">${genres}</div>
 					<div class="type">${post.type.full_string}</div>
+					${schedule}
 					<div class="team">
 						<div class="voice">
 							<strong>Голоса:</strong>

@@ -199,3 +199,28 @@ const getStorablePlayerData = () => {
 
 	return data;
 }
+
+const transformScheduleList = schedule => {
+	const resultList = {};
+	const currentDayNum = (new Date()).getDay();
+	const dayNames = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"];
+
+	for(let i in schedule) {
+		for(let j in schedule[i].list) {
+			if(resultList[schedule[i].list[j].id]) {
+				continue;
+			}
+
+			resultList[schedule[i].list[j].id] = {
+				day: {
+					num: schedule[i].day,
+					string: dayNames[schedule[i].day],
+					isToday: schedule[i].day == currentDayNum
+				},
+				item: schedule[i].list[j]
+			}
+		}
+	}
+
+	return resultList;
+}

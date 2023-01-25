@@ -84,4 +84,21 @@ class Loader {
 			60 * 60 * 3
 		);
 	}
+
+	scheduleList(callback) {
+		app().cacheProvider.cacheable(
+			"scheduleList",
+			cacheableCallback => {
+				anilibriaRequest(
+					"title/schedule", 
+					{
+						filter: getItemCardFields()
+					}, 
+					cacheableCallback
+				);
+			},
+			callback,
+			60 * 60 * 3
+		);
+	}
 }

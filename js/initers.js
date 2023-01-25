@@ -37,11 +37,16 @@ const initers = app => {
 			}, 
 			resp => {
 				setPageTitle(resp.names.ru);
-				const genres = resp.genres.join(",");
+				const genres = resp.genres;
 				const renderContainer = document.querySelector("#single .render-container.main-render");
-				renderContainer.innerHTML = "";
-				document.querySelector("#single .preload-spinner").classList.add("dnone");
-				renderContainer.appendChild(app.renderer.renderSingle(resp).node);
+
+				app.loader.scheduleList(scheduleList => {
+					scheduleList = transformScheduleList(scheduleList);
+					resp.inSchedule = scheduleList[resp.id] ? scheduleList[resp.id].day : false;
+					renderContainer.innerHTML = "";
+					document.querySelector("#single .preload-spinner").classList.add("dnone");
+					renderContainer.appendChild(app.renderer.renderSingle(resp).node);
+				});
 
 				let squery = resp.names.ru;
 				const filters = getItemCardFields().join(",");
@@ -75,7 +80,7 @@ const initers = app => {
 										"title/search", 
 										{
 											search: "",
-											genres: genres,
+											genres: genres.splice(0, 4).join(","),
 											after: 0,
 											limit: _CONF.numbOfRelevant + 1,
 											filter: getItemCardFields(),
@@ -111,10 +116,14 @@ const initers = app => {
 			const renderContainer = document.querySelector("#favourites .render-container");
 			document.querySelector("#favourites .preload-spinner").classList.add("dnone");
 			renderContainer.innerHTML = "";
-			for(let i = resp.length-1; i >= 0 ; i--) {
-				resp[i].player.episodes = resp[i].player.series;
-				renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
-			}
+			app.loader.scheduleList(scheduleList => {
+				scheduleList = transformScheduleList(scheduleList);
+				for(let i = resp.length-1; i >= 0; i--) {
+					resp[i].player.episodes = resp[i].player.series;
+					resp[i].inSchedule = scheduleList[resp[i].id] ? scheduleList[resp[i].id].day : false;
+					renderContainer.appendChild(app.renderer.renderItemCard(resp[i]).node);
+				}
+			});
 		});
 	});
 
