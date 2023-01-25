@@ -19,9 +19,11 @@ const initers = app => {
 	app.router.initPage("home", router => {
 		app.loader.homePageUpToLoad(1, resp => {
 			const renderContainer = document.querySelector("#home .render-container");
+			const moreBtn = document.querySelector("#home .preload-spinner");
 			renderContainer.innerHTML = "";
-			document.querySelector("#home .preload-spinner").classList.add("dnone");
-			resp.list.length && document.querySelector("#home .more-btn").classList.remove("dnone");
+			moreBtn.classList.add("dnone");
+			resp.list.length && document.querySelector(".more-btn").classList.remove("dnone");
+			(resp.pagination.current_page == resp.pagination.pages) && moreBtn.classList.add("dnone");
 			insertListToRenderContainer(renderContainer, resp.list);
 		});
 	});
@@ -133,9 +135,11 @@ const initers = app => {
 
 		app.loader.searchPageUpToLoad(1, resp => {
 			const renderContainer = document.querySelector("#search .render-container");
+			const moreBtn = document.querySelector("#search .more-btn");
 			renderContainer.innerHTML = "";
 			document.querySelector("#search .preload-spinner").classList.add("dnone");
-			resp.list.length && document.querySelector("#search .more-btn").classList.remove("dnone");
+			resp.list.length && moreBtn.classList.remove("dnone");
+			(resp.pagination.current_page == resp.pagination.pages) && moreBtn.classList.add("dnone");
 			insertListToRenderContainer(renderContainer, resp.list);
 		});
 	});
@@ -191,9 +195,11 @@ const initers = app => {
 		if(selectedGenres) {
 			app.loader.genresPageUpToLoad(1, resp => {
 				const renderContainer = document.querySelector("#genres .render-container");
+				const moreBtn = document.querySelector("#genres .more-btn");
 				renderContainer.innerHTML = "";
 				document.querySelector("#genres .preload-spinner").classList.add("dnone");
-				resp.list.length && document.querySelector("#genres .more-btn").classList.remove("dnone");
+				resp.list.length && moreBtn.classList.remove("dnone");
+				(resp.pagination.current_page == resp.pagination.pages) && moreBtn.classList.add("dnone");
 				insertListToRenderContainer(renderContainer, resp.list);
 			});
 		} else {
