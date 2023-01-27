@@ -1,0 +1,21 @@
+.component.thumbnail,
+.logo img,
+.std-btn {
+	transition-duration: $trans-du;
+	transition-property: filter;
+}
+
+.night-mode {
+	color: $color-text-night;
+	
+	.component.navigation-main .nav-list .nav-list-item .nav-link {
+		color: $color-text-night;
+	}
+
+	.component.thumbnail,
+	.std-btn,
+	.logo img,
+	.component.tabs .tabs-nav .tab.active {
+		filter: brightness(.8);
+	}
+}

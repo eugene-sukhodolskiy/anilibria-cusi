@@ -22,6 +22,14 @@ class App {
 		this.initBaseEvents();
 		this.initGenres();
 		this.initGoToTopBtn();
+		this.initNightMode();
+	}
+
+	initNightMode() {
+		const hours = (new Date()).getHours();
+		if(hours <= 8 || hours >= 20) {
+			document.querySelector("body").classList.add("night-mode");
+		}
 	}
 
 	initPreloadSpinner() {

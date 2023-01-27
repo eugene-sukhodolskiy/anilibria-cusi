@@ -215,7 +215,7 @@ const transformScheduleList = schedule => {
 				day: {
 					num: schedule[i].day,
 					string: dayNames[schedule[i].day],
-					isToday: schedule[i].day == currentDayNum
+					isToday: schedule[i].day == (currentDayNum - 1)
 				},
 				item: schedule[i].list[j]
 			}

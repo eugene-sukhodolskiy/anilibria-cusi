@@ -60,6 +60,7 @@ class PostRender {
 
 		setTimeout(() => {
 			let player = new Playerjs(playerData);
+			playerPatch(playerData.id);
 		}, 30);
 
 		item.querySelector(".fav-btn-wrap").appendChild(app().renderer.renderFavoriteBtn(post).node);
