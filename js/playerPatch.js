@@ -1,8 +1,20 @@
 const playerPatch = plId => {
 	const pl = document.querySelector(`#${plId}`);
+	const skipBox = pl.childNodes[0].childNodes[21].childNodes[0].childNodes[0];
+
 	pl.childNodes[0].addEventListener("contextmenu", e => {
 		e.stopImmediatePropagation();
 	}, true);
+
+	const fixSkin = () => {
+		skipBox.style.borderRadius = "6px";
+		skipBox.style.border = "0";
+
+		const episodesListBtn = pl.childNodes[0].childNodes[16].childNodes[0].childNodes[0];
+		episodesListBtn.style.borderRadius = "0 4px 4px 0";
+	}
+
+	fixSkin();
 
 	window.player = {
 		container: pl,
@@ -54,7 +66,13 @@ const playerPatch = plId => {
 				if(window.player.api.isPlaying()) {
 					window.player.api.playPause();
 				}
-			}
+			},
+
+			skipOpening: () => {
+				if(pl.childNodes[0].childNodes[21].style.display != "none"){
+					skipBox.click();
+				}
+			},
 		}
 	}
 
@@ -71,12 +89,16 @@ const playerPatch = plId => {
 	});
 
 	document.addEventListener("keyup", e => {
-		if(e.keyCode == 78) {
+		if(e.keyCode == 78) { // n
 			player.api.next();
 		}
 
-		if(e.keyCode == 66) {
+		if(e.keyCode == 66) { // b
 			player.api.back();
+		}
+
+		if(e.keyCode == 83) { // s
+			player.api.skipOpening();
 		}
 	});
 }

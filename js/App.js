@@ -7,6 +7,7 @@ class App {
 		this.loader = new Loader();
 		this.cacheProvider = new CacheProvider();
 		this.storedPlayerDataManager = new StoredPlayerDataManager();
+		this.sync = new Sync();
 
 		setTimeout(() => {
 			this.init();

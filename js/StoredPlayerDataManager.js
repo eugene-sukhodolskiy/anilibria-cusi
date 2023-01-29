@@ -14,8 +14,8 @@ class StoredPlayerDataManager {
 		}, 5 * 60 * 1000);
 	}
 
-	backupPlayerData() {
-		const playerData = getStorablePlayerData();
+	backupPlayerData(plData) {
+		const playerData = plData || getStorablePlayerData();
 		const bPlayerData = this.getBackupedPlayerData();
 		for(let id in playerData) {
 			if(bPlayerData[id]) {

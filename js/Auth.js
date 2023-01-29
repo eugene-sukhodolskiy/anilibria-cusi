@@ -27,6 +27,7 @@ class Auth {
 					const resp = JSON.parse(xhr.response);
 					if(resp.err == "ok") {
 						localStorage.setItem("sessionId", resp.sessionId);
+						localStorage.setItem("uemail", email);
 						const alert = createGlobalAlertComponent("success", "Успешно!");
 						setTimeout(() => {
 							alert.close();

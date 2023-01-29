@@ -11,5 +11,9 @@ const _CONF = {
 		genres: 20
 	},
 	
-	numbOfRelevant: 12
+	numbOfRelevant: 12,
+
+	sync: {
+		url: "//192.168.1.100/anilibria-cusi/sync/sync.php"
+	}
 };

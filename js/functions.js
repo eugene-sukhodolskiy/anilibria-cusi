@@ -146,7 +146,7 @@ const anilibriaRequest = (name, params, callback, method) => {
 		[ver, name] = name.split(":");
 	}
 
-	let url = `//${_CONF.api.domen}/api/${ver}/${name}`;
+	let url = `https://${_CONF.api.domen}/api/${ver}/${name}`;
 	
 	if(params["filter"]) {	
 		params.filter = params.filter.join(",");
@@ -184,7 +184,7 @@ const getStorablePlayerData = () => {
 			continue;
 		}
 
-		const id = parseInt(key.split("pljsplayfrom_main-player-")[1]);
+		const id = parseInt(key.split("pljsplayfrom_main-player-")[1].replaceAll(document.location.hostname, ""));
 		let val = localStorage.getItem(key);
 		[watched, len, watchedAt] = val.split("}")[1].split("--");
 		data[id] = {
