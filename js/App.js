@@ -30,7 +30,11 @@ class App {
 		const hours = (new Date()).getHours();
 		if(hours <= 8 || hours >= 20) {
 			document.querySelector("body").classList.add("night-mode");
+		} else {
+			document.querySelector("body").classList.remove("night-mode");
 		}
+
+		setTimeout(() => this.initNightMode(), 60 * 1000);
 	}
 
 	initPreloadSpinner() {
