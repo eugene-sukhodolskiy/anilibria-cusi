@@ -7,8 +7,8 @@ const _CONF = {
 
 	perPage: {
 		home: 20,
-		search: 40,
-		genres: 40
+		search: 80,
+		genres: 80
 	},
 	
 	numbOfRelevant: 12,
